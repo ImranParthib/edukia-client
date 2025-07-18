@@ -74,7 +74,7 @@ const NAV_ITEMS = [
 
 export function MainNav({ className, ...props }) {
   return (
-    <nav className="hidden md:flex gap-6 items-center" {...props}>
+    <nav className="hidden md:flex gap-4 lg:gap-6 items-center" {...props}>
       {NAV_ITEMS.map((item, index) => (
         <div key={index} className="relative">
           {item.dropdown ? (
@@ -82,9 +82,9 @@ export function MainNav({ className, ...props }) {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary py-2 px-2 h-auto"
+                  className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary py-1.5 px-2 h-auto"
                 >
-                  {item.label} <ChevronDown className="h-4 w-4" />
+                  {item.label} <ChevronDown className="h-3.5 w-3.5" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-48">
@@ -100,7 +100,7 @@ export function MainNav({ className, ...props }) {
           ) : (
             <Link
               href={item.href}
-              className="text-sm font-medium transition-colors hover:text-primary py-2 px-2"
+              className="text-sm font-medium transition-colors hover:text-primary py-1.5 px-2"
             >
               {item.label}
             </Link>
