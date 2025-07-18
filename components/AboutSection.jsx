@@ -1,85 +1,95 @@
+"use client";
+
 import React from "react";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 export function AboutSection() {
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-900">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              About Our College
-            </h2>
-            <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Nurturing women's education for over six decades
-            </p>
-          </div>
-        </div>
-        <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-          <div className="flex flex-col justify-center space-y-4">
-            <div className="space-y-2">
-              <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl">
-                Our Mission
-              </h3>
-              <p className="text-gray-500 md:text-lg/relaxed dark:text-gray-400">
-                To provide quality education to women, empowering them with
-                knowledge, skills, and values to become responsible citizens and
-                leaders of tomorrow.
+    <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24 xl:py-32 bg-gray-50 dark:bg-gray-900">
+      <div className="container px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="grid gap-6 lg:gap-8 xl:gap-12 lg:grid-cols-2 items-center">
+          <div className="flex flex-col justify-center space-y-4 sm:space-y-6 order-2 lg:order-1">
+            <div className="space-y-2 sm:space-y-3">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">
+                About Our College
+              </h2>
+              <p className="text-sm sm:text-base md:text-lg text-gray-500 dark:text-gray-400 leading-relaxed">
+                Established in 1960, Mohammadpur Mohila College has been a
+                beacon of women&apos;s education in Bangladesh for over six
+                decades.
               </p>
             </div>
-            <div className="space-y-2">
-              <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl">
-                Our Vision
-              </h3>
-              <p className="text-gray-500 md:text-lg/relaxed dark:text-gray-400">
-                To be the premier educational institution for women in
-                Bangladesh, known for academic excellence and holistic
-                development.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-4 py-4">
-              <div className="flex flex-col items-center justify-center gap-1 rounded-lg bg-gray-100 px-4 py-3 dark:bg-gray-800">
-                <div className="text-xl font-bold">1960</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Established
-                </div>
+            <div className="grid gap-4 sm:gap-6">
+              <div className="space-y-2">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tighter">
+                  Our Mission
+                </h3>
+                <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 leading-relaxed">
+                  To provide quality education to women, empowering them with
+                  knowledge, skills, and values to become responsible citizens
+                  and leaders of tomorrow.
+                </p>
               </div>
-              <div className="flex flex-col items-center justify-center gap-1 rounded-lg bg-gray-100 px-4 py-3 dark:bg-gray-800">
-                <div className="text-xl font-bold">5000+</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Students
-                </div>
+              <div className="space-y-2">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tighter">
+                  Our Vision
+                </h3>
+                <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 leading-relaxed">
+                  To be the premier educational institution for women in
+                  Bangladesh, known for academic excellence and holistic
+                  development.
+                </p>
               </div>
-              <div className="flex flex-col items-center justify-center gap-1 rounded-lg bg-gray-100 px-4 py-3 dark:bg-gray-800">
-                <div className="text-xl font-bold">100+</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Faculty
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 py-4">
+                <div className="flex flex-col items-center justify-center gap-1 rounded-lg bg-gray-100 px-2 sm:px-4 py-3 dark:bg-gray-800">
+                  <div className="text-lg sm:text-xl font-bold">1960</div>
+                  <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center">
+                    Established
+                  </div>
                 </div>
-              </div>
-              <div className="flex flex-col items-center justify-center gap-1 rounded-lg bg-gray-100 px-4 py-3 dark:bg-gray-800">
-                <div className="text-xl font-bold">15</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Departments
+                <div className="flex flex-col items-center justify-center gap-1 rounded-lg bg-gray-100 px-2 sm:px-4 py-3 dark:bg-gray-800">
+                  <div className="text-lg sm:text-xl font-bold">5000+</div>
+                  <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center">
+                    Students
+                  </div>
+                </div>
+                <div className="flex flex-col items-center justify-center gap-1 rounded-lg bg-gray-100 px-2 sm:px-4 py-3 dark:bg-gray-800">
+                  <div className="text-lg sm:text-xl font-bold">100+</div>
+                  <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center">
+                    Faculty
+                  </div>
+                </div>
+                <div className="flex flex-col items-center justify-center gap-1 rounded-lg bg-gray-100 px-2 sm:px-4 py-3 dark:bg-gray-800">
+                  <div className="text-lg sm:text-xl font-bold">15</div>
+                  <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center">
+                    Departments
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-first">
+          <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center w-full order-1 lg:order-2">
             {/* Placeholder for about image */}
             <div className="h-full w-full bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900 dark:to-blue-900 flex items-center justify-center">
-              <span className="text-lg text-gray-500 dark:text-gray-400">
+              <span className="text-sm sm:text-base md:text-lg text-gray-500 dark:text-gray-400 text-center px-4">
                 College History Image
               </span>
             </div>
           </div>
         </div>
-        <Separator className="my-8" />
+        <Separator className="my-6 sm:my-8" />
         <div className="mx-auto flex max-w-[800px] flex-col items-center space-y-4 text-center">
-          <blockquote className="italic text-xl text-gray-600 dark:text-gray-300">
-            "Education is the most powerful weapon which you can use to change
-            the world."
-          </blockquote>
-          <p className="text-gray-500 dark:text-gray-400">- Nelson Mandela</p>
+          <p className="text-sm sm:text-base md:text-lg text-gray-500 dark:text-gray-400 leading-relaxed">
+            We are committed to fostering an environment where women can thrive
+            academically, personally, and professionally.
+          </p>
+          <Link href="/about">
+            <Button variant="outline" className="w-full sm:w-auto">
+              Learn More About Us
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

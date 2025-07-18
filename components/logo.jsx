@@ -5,15 +5,17 @@ import Image from "next/image";
 
 export function Logo() {
   return (
-    <Link href="/" className="flex items-center space-x-2">
-      <div className="flex items-center space-x-2">
+    <Link href="/" className="flex items-center space-x-1 sm:space-x-2 min-w-0">
+      <div className="flex items-center space-x-1 sm:space-x-2 min-w-0">
         {/* Logo Image */}
-        <Image
-          src="/images/mmc-logo.png"
-          alt="Mohammadpur Mohila College Logo"
-          width={160}
-          height={120}
-        />
+        <div className="flex-shrink-0">
+          <Image
+            src="/images/mmc-logo.png"
+            alt="Mohammadpur Mohila College Logo"
+            width={140}
+            height={140}
+          />
+        </div>
       </div>
     </Link>
   );

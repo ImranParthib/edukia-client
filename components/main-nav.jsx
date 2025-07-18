@@ -74,7 +74,10 @@ const NAV_ITEMS = [
 
 export function MainNav({ className, ...props }) {
   return (
-    <nav className="hidden md:flex gap-4 lg:gap-6 items-center" {...props}>
+    <nav
+      className="hidden lg:flex gap-3 xl:gap-4 2xl:gap-6 items-center"
+      {...props}
+    >
       {NAV_ITEMS.map((item, index) => (
         <div key={index} className="relative">
           {item.dropdown ? (
@@ -82,15 +85,19 @@ export function MainNav({ className, ...props }) {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary py-1.5 px-2 h-auto"
+                  className="flex items-center gap-1 text-xs xl:text-sm font-medium transition-colors hover:text-primary py-1.5 px-2 xl:px-3 h-auto whitespace-nowrap"
                 >
-                  {item.label} <ChevronDown className="h-3.5 w-3.5" />
+                  {item.label}{" "}
+                  <ChevronDown className="h-3 w-3 xl:h-3.5 xl:w-3.5" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48">
+              <DropdownMenuContent align="start" className="w-44 xl:w-48">
                 {item.items.map((subItem, subIndex) => (
                   <DropdownMenuItem key={subIndex} asChild>
-                    <Link href={subItem.href} className="w-full cursor-pointer">
+                    <Link
+                      href={subItem.href}
+                      className="w-full cursor-pointer text-sm"
+                    >
                       {subItem.label}
                     </Link>
                   </DropdownMenuItem>
@@ -100,7 +107,7 @@ export function MainNav({ className, ...props }) {
           ) : (
             <Link
               href={item.href}
-              className="text-sm font-medium transition-colors hover:text-primary py-1.5 px-2"
+              className="text-xs xl:text-sm font-medium transition-colors hover:text-primary py-1.5 px-2 xl:px-3 whitespace-nowrap"
             >
               {item.label}
             </Link>
