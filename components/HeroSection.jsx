@@ -9,8 +9,8 @@ import Link from "next/link";
 export function HeroSection() {
   return (
     <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24 xl:py-32 2xl:py-48">
-      <div className="container px-3 sm:px-4 md:px-6 lg:px-8">
-        <div className="grid gap-6 lg:grid-cols-2 lg:gap-8 xl:gap-12 2xl:grid-cols-2 items-center">
+      <div className="container mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="grid gap-6 lg:grid-cols-2 lg:gap-8 xl:gap-12 items-center">
           <div className="flex flex-col justify-center space-y-3 sm:space-y-4 lg:space-y-6 order-2 lg:order-1">
             <div className="space-y-2 sm:space-y-3 lg:space-y-4">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tighter leading-tight">
@@ -46,8 +46,22 @@ export function HeroSection() {
           </div>
           <div className="flex items-center justify-center relative order-1 lg:order-2">
             <div className="relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] xl:h-[500px] 2xl:h-[550px] w-full rounded-lg overflow-hidden">
-              {/* Placeholder for college building image - replace with actual image when available */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-950 dark:to-purple-950 flex items-center justify-center">
+              <Image
+                src="/images/mmc.png"
+                alt="Mohammadpur Mohila College Building"
+                fill
+                className="object-cover"
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                  e.currentTarget.nextElementSibling.style.display = "flex";
+                }}
+              />
+              <div
+                className="absolute inset-0 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-950 dark:to-purple-950 flex items-center justify-center"
+                style={{ display: "none" }}
+              >
                 <span className="text-sm sm:text-base md:text-lg text-gray-500 dark:text-gray-400 text-center px-4">
                   College Building Image
                 </span>

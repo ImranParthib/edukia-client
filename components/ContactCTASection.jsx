@@ -5,8 +5,8 @@ import { Phone, Mail, MapPin, Clock, ExternalLink } from "lucide-react";
 
 export function ContactCTASection() {
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-900">
-      <div className="container px-4 md:px-6">
+    <section className="w-full py-12 md:py-12 lg:py-12 bg-gray-50 dark:bg-gray-900">
+      <div className="container mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">

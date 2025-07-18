@@ -7,7 +7,7 @@ import { ContactCTASection } from "@/components/ContactCTASection";
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-center">
+    <main className="flex flex-col min-h-screen w-full">
       <HeroSection />
       <AboutSection />
       <AcademicFeaturesSection />

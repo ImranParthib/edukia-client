@@ -11,143 +11,168 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "@/components/ui/card";
 import { Calendar, Bell, ChevronRight } from "lucide-react";
 
 export function NoticeEventsSection() {
-  // Sample notices (would come from an API/database in a real implementation)
   const notices = [
     {
       id: 1,
-      title: "Admission Open for 2023-24 Session",
-      date: "2023-05-15",
-      excerpt:
-        "Applications are invited for admission to various programs for the upcoming academic session.",
+      title: "HSC Examination 2024 Schedule Released",
+      date: "2024-01-15",
+      description:
+        "The Higher Secondary Certificate examination schedule for 2024 has been published.",
+      urgent: true,
     },
     {
       id: 2,
-      title: "Schedule for Mid-Term Examinations",
-      date: "2023-06-10",
-      excerpt:
-        "Mid-term examinations for all classes will commence from July 1st, 2023.",
+      title: "Annual Sports Day 2024",
+      date: "2024-01-20",
+      description:
+        "Join us for the annual sports day celebration with various competitions.",
+      urgent: false,
     },
     {
       id: 3,
-      title: "Science Fair Registration",
-      date: "2023-06-18",
-      excerpt:
-        "Students interested in participating in the Annual Science Fair are requested to register by June 30.",
+      title: "Admission for Session 2024-25",
+      date: "2024-01-10",
+      description:
+        "Admission applications are now open for the academic session 2024-25.",
+      urgent: true,
     },
   ];
 
-  // Sample upcoming events
   const events = [
     {
       id: 1,
-      title: "Annual Cultural Festival",
-      date: "2023-07-15",
-      excerpt:
-        "Three-day cultural extravaganza featuring performances, competitions and exhibitions.",
+      title: "Cultural Program 2024",
+      date: "2024-02-14",
+      description:
+        "Annual cultural program featuring music, dance, and drama performances.",
+      image:
+        "bg-gradient-to-r from-pink-200 to-pink-300 dark:from-pink-800 dark:to-pink-900",
     },
     {
       id: 2,
-      title: "Parent-Teacher Meeting",
-      date: "2023-07-22",
-      excerpt:
-        "Discussion about student progress and addressing concerns for the ongoing semester.",
+      title: "Science Fair",
+      date: "2024-02-20",
+      description:
+        "Students showcase innovative science projects and experiments.",
+      image:
+        "bg-gradient-to-r from-blue-200 to-blue-300 dark:from-blue-800 dark:to-blue-900",
     },
     {
       id: 3,
-      title: "Career Counseling Workshop",
-      date: "2023-08-05",
-      excerpt:
-        "Guidance on future career paths and higher education opportunities for final year students.",
+      title: "Graduation Ceremony",
+      date: "2024-03-01",
+      description: "Celebrating the achievements of our graduating students.",
+      image:
+        "bg-gradient-to-r from-green-200 to-green-300 dark:from-green-800 dark:to-green-900",
     },
   ];
 
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-900">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
+    <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24 xl:py-32 bg-gray-50 dark:bg-gray-900">
+      <div className="container mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 sm:mb-12">
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Notices & Events
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">
+              Notice & Events
             </h2>
-            <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Stay updated with the latest announcements and upcoming events
+            <p className="mx-auto max-w-[700px] text-sm sm:text-base md:text-lg lg:text-xl text-gray-500 dark:text-gray-400 leading-relaxed">
+              Stay updated with our latest announcements and upcoming events
             </p>
           </div>
         </div>
-        <div className="mx-auto max-w-4xl mt-12">
-          <Tabs defaultValue="notices" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="notices" className="flex items-center gap-2">
-                <Bell className="h-4 w-4" />
-                Notices
-              </TabsTrigger>
-              <TabsTrigger value="events" className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                Upcoming Events
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="notices" className="mt-4 space-y-4">
+
+        <Tabs defaultValue="notices" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-6 sm:mb-8">
+            <TabsTrigger value="notices" className="flex items-center gap-2">
+              <Bell className="h-4 w-4" />
+              Notices
+            </TabsTrigger>
+            <TabsTrigger value="events" className="flex items-center gap-2">
+              <Calendar className="h-4 w-4" />
+              Events
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="notices" className="space-y-4 sm:space-y-6">
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
               {notices.map((notice) => (
-                <Card key={notice.id}>
+                <Card key={notice.id} className="relative">
+                  {notice.urgent && (
+                    <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                      Urgent
+                    </div>
+                  )}
                   <CardHeader>
-                    <CardTitle>{notice.title}</CardTitle>
-                    <CardDescription>Posted on: {notice.date}</CardDescription>
+                    <CardTitle className="text-lg">{notice.title}</CardTitle>
+                    <CardDescription className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4" />
+                      {new Date(notice.date).toLocaleDateString()}
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p>{notice.excerpt}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      {notice.description}
+                    </p>
                   </CardContent>
                   <CardFooter>
-                    <Link href={`/notice/${notice.id}`}>
-                      <Button variant="outline" size="sm" className="ml-auto">
-                        Read More <ChevronRight className="ml-1 h-4 w-4" />
-                      </Button>
-                    </Link>
+                    <Button variant="outline" size="sm" className="ml-auto">
+                      Read More
+                      <ChevronRight className="h-4 w-4 ml-1" />
+                    </Button>
                   </CardFooter>
                 </Card>
               ))}
-              <div className="text-center mt-6">
-                <Link href="/notice">
-                  <Button variant="outline">
-                    View All Notices
-                    <ChevronRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-            </TabsContent>
-            <TabsContent value="events" className="mt-4 space-y-4">
+            </div>
+            <div className="text-center">
+              <Link href="/notice">
+                <Button variant="outline">View All Notices</Button>
+              </Link>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="events" className="space-y-4 sm:space-y-6">
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
               {events.map((event) => (
                 <Card key={event.id}>
+                  <div
+                    className={`h-32 sm:h-40 ${event.image} rounded-t-lg flex items-center justify-center`}
+                  >
+                    <span className="text-sm text-gray-600 dark:text-gray-300">
+                      Event Image
+                    </span>
+                  </div>
                   <CardHeader>
-                    <CardTitle>{event.title}</CardTitle>
-                    <CardDescription>Date: {event.date}</CardDescription>
+                    <CardTitle className="text-lg">{event.title}</CardTitle>
+                    <CardDescription className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4" />
+                      {new Date(event.date).toLocaleDateString()}
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p>{event.excerpt}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      {event.description}
+                    </p>
                   </CardContent>
                   <CardFooter>
-                    <Link href={`/event/${event.id}`}>
-                      <Button variant="outline" size="sm" className="ml-auto">
-                        View Details <ChevronRight className="ml-1 h-4 w-4" />
-                      </Button>
-                    </Link>
+                    <Button variant="outline" size="sm" className="ml-auto">
+                      Learn More
+                      <ChevronRight className="h-4 w-4 ml-1" />
+                    </Button>
                   </CardFooter>
                 </Card>
               ))}
-              <div className="text-center mt-6">
-                <Link href="/events">
-                  <Button variant="outline">
-                    View All Events
-                    <ChevronRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-            </TabsContent>
-          </Tabs>
-        </div>
+            </div>
+            <div className="text-center">
+              <Link href="/events">
+                <Button variant="outline">View All Events</Button>
+              </Link>
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </section>
   );

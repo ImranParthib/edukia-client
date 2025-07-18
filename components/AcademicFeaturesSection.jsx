@@ -44,7 +44,7 @@ export function AcademicFeaturesSection() {
 
   return (
     <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24 xl:py-32">
-      <div className="container px-3 sm:px-4 md:px-6 lg:px-8">
+      <div className="container mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">

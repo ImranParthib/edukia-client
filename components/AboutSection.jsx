@@ -8,7 +8,7 @@ import Link from "next/link";
 export function AboutSection() {
   return (
     <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24 xl:py-32 bg-gray-50 dark:bg-gray-900">
-      <div className="container px-3 sm:px-4 md:px-6 lg:px-8">
+      <div className="container mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="grid gap-6 lg:gap-8 xl:gap-12 lg:grid-cols-2 items-center">
           <div className="flex flex-col justify-center space-y-4 sm:space-y-6 order-2 lg:order-1">
             <div className="space-y-2 sm:space-y-3">
