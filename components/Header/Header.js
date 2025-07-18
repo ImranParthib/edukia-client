@@ -1,25 +1,33 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
+import Link from "next/link";
 import { Button } from "../ui/button";
+import { ModeToggle } from "../mode-toggle";
+import { MainNav } from "../main-nav";
+import { MobileNav } from "../mobile-nav";
+import { Logo } from "../logo";
 
 const Header = () => {
   return (
-    <header className="bg-white shadow-md border-b">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <div className="text-2xl font-bold text-primary">Edukia</div>
-        <nav
-          className="flex gap-4"
-          role="navigation"
-          aria-label="Main navigation"
-        >
+    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+        <div className="flex items-center gap-2">
+          <Logo />
+        </div>
+
+        <div className="flex items-center gap-4">
+          <MainNav />
+          <ModeToggle />
           <Button
             variant="default"
-            size="default"
-            aria-label="Start your Edukia journey"
+            size="sm"
+            className="hidden md:flex"
+            asChild
           >
-            Get Started
+            <Link href="/admission">Apply Now</Link>
           </Button>
-        </nav>
+          <MobileNav />
+        </div>
       </div>
     </header>
   );
