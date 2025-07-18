@@ -3,6 +3,13 @@
 import * as React from "react";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 const NAV_ITEMS = [
   {
@@ -66,60 +73,34 @@ const NAV_ITEMS = [
 ];
 
 export function MainNav({ className, ...props }) {
-  const [activeDropdown, setActiveDropdown] = React.useState(null);
-
-  const handleDropdownToggle = (index) => {
-    if (activeDropdown === index) {
-      setActiveDropdown(null);
-    } else {
-      setActiveDropdown(index);
-    }
-  };
-
-  // Close dropdown when clicking outside
-  React.useEffect(() => {
-    const handleClickOutside = () => setActiveDropdown(null);
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
-
   return (
     <nav className="hidden md:flex gap-6 items-center" {...props}>
       {NAV_ITEMS.map((item, index) => (
         <div key={index} className="relative">
           {item.dropdown ? (
-            <div className="flex flex-col">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDropdownToggle(index);
-                }}
-                className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary py-2"
-              >
-                {item.label} <ChevronDown className="h-4 w-4" />
-              </button>
-
-              {activeDropdown === index && (
-                <div className="absolute top-full left-0 mt-1 w-64 bg-background border rounded-md shadow-lg z-50">
-                  <div className="py-1">
-                    {item.items.map((subItem, subIndex) => (
-                      <Link
-                        key={subIndex}
-                        href={subItem.href}
-                        className="block px-4 py-2 text-sm hover:bg-muted transition-colors"
-                        onClick={() => setActiveDropdown(null)}
-                      >
-                        {subItem.label}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary py-2 px-2 h-auto"
+                >
+                  {item.label} <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-48">
+                {item.items.map((subItem, subIndex) => (
+                  <DropdownMenuItem key={subIndex} asChild>
+                    <Link href={subItem.href} className="w-full cursor-pointer">
+                      {subItem.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <Link
               href={item.href}
-              className="text-sm font-medium transition-colors hover:text-primary py-2"
+              className="text-sm font-medium transition-colors hover:text-primary py-2 px-2"
             >
               {item.label}
             </Link>
