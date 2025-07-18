@@ -16,11 +16,10 @@ const NAV_ITEMS = [
   {
     label: "Academics",
     href: "/academics",
-    icon: "📘",
     dropdown: true,
     items: [
       {
-        label: "Departments / Subjects",
+        label: "Departments",
         href: "/academics/departments",
       },
       {
@@ -31,32 +30,23 @@ const NAV_ITEMS = [
         label: "Class Routine",
         href: "/academics/routine",
       },
-      {
-        label: "Faculty Members",
-        href: "/academics/faculty",
-      },
     ],
   },
   {
     label: "Admission",
     href: "/admission",
-    icon: "🎓",
     dropdown: true,
     items: [
       {
-        label: "Admission Info",
-        href: "/admission/info",
+        label: "Requirements",
+        href: "/admission/requirements",
       },
       {
         label: "Admission Form",
         href: "/admission/form",
       },
       {
-        label: "Requirements",
-        href: "/admission/requirements",
-      },
-      {
-        label: "Fees & Scholarships",
+        label: "Fees",
         href: "/admission/fees",
       },
     ],
@@ -89,8 +79,8 @@ export function MainNav({ className, ...props }) {
   // Close dropdown when clicking outside
   React.useEffect(() => {
     const handleClickOutside = () => setActiveDropdown(null);
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
   return (
@@ -106,7 +96,7 @@ export function MainNav({ className, ...props }) {
                 }}
                 className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary py-2"
               >
-                <span>{item.icon}</span> {item.label} <ChevronDown className="h-4 w-4" />
+                {item.label} <ChevronDown className="h-4 w-4" />
               </button>
 
               {activeDropdown === index && (

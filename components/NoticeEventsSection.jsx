@@ -1,11 +1,18 @@
-"use client"
+"use client";
 
-import React from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Calendar, Bell, ChevronRight } from "lucide-react"
+import React from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import { Calendar, Bell, ChevronRight } from "lucide-react";
 
 export function NoticeEventsSection() {
   // Sample notices (would come from an API/database in a real implementation)
@@ -14,21 +21,24 @@ export function NoticeEventsSection() {
       id: 1,
       title: "Admission Open for 2023-24 Session",
       date: "2023-05-15",
-      excerpt: "Applications are invited for admission to various programs for the upcoming academic session."
+      excerpt:
+        "Applications are invited for admission to various programs for the upcoming academic session.",
     },
     {
       id: 2,
       title: "Schedule for Mid-Term Examinations",
       date: "2023-06-10",
-      excerpt: "Mid-term examinations for all classes will commence from July 1st, 2023."
+      excerpt:
+        "Mid-term examinations for all classes will commence from July 1st, 2023.",
     },
     {
       id: 3,
       title: "Science Fair Registration",
       date: "2023-06-18",
-      excerpt: "Students interested in participating in the Annual Science Fair are requested to register by June 30."
-    }
-  ]
+      excerpt:
+        "Students interested in participating in the Annual Science Fair are requested to register by June 30.",
+    },
+  ];
 
   // Sample upcoming events
   const events = [
@@ -36,28 +46,33 @@ export function NoticeEventsSection() {
       id: 1,
       title: "Annual Cultural Festival",
       date: "2023-07-15",
-      excerpt: "Three-day cultural extravaganza featuring performances, competitions and exhibitions."
+      excerpt:
+        "Three-day cultural extravaganza featuring performances, competitions and exhibitions.",
     },
     {
       id: 2,
       title: "Parent-Teacher Meeting",
       date: "2023-07-22",
-      excerpt: "Discussion about student progress and addressing concerns for the ongoing semester."
+      excerpt:
+        "Discussion about student progress and addressing concerns for the ongoing semester.",
     },
     {
       id: 3,
       title: "Career Counseling Workshop",
       date: "2023-08-05",
-      excerpt: "Guidance on future career paths and higher education opportunities for final year students."
-    }
-  ]
+      excerpt:
+        "Guidance on future career paths and higher education opportunities for final year students.",
+    },
+  ];
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-900">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Notices & Events</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              Notices & Events
+            </h2>
             <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
               Stay updated with the latest announcements and upcoming events
             </p>
@@ -135,5 +150,5 @@ export function NoticeEventsSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

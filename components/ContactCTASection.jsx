@@ -1,7 +1,7 @@
-import React from "react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { Phone, Mail, MapPin, Clock, ExternalLink } from "lucide-react"
+import React from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Phone, Mail, MapPin, Clock, ExternalLink } from "lucide-react";
 
 export function ContactCTASection() {
   return (
@@ -10,7 +10,9 @@ export function ContactCTASection() {
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Get in Touch</h2>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                Get in Touch
+              </h2>
               <p className="text-gray-500 md:text-xl dark:text-gray-400">
                 Have questions? Feel free to reach out to us.
               </p>
@@ -35,11 +37,13 @@ export function ContactCTASection() {
             </div>
             <div className="flex flex-col sm:flex-row gap-4 mt-4">
               <Link href="/contact">
-                <Button className="w-full sm:w-auto">
-                  Contact Us
-                </Button>
+                <Button className="w-full sm:w-auto">Contact Us</Button>
               </Link>
-              <Link href="https://maps.google.com" target="_blank" rel="noopener noreferrer">
+              <Link
+                href="https://maps.google.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Button variant="outline" className="w-full sm:w-auto">
                   View on Map
                   <ExternalLink className="ml-2 h-4 w-4" />
@@ -51,7 +55,8 @@ export function ContactCTASection() {
             <div className="rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800">
               <h3 className="text-2xl font-bold">Apply for Admission</h3>
               <p className="mt-2 text-gray-500 dark:text-gray-400">
-                Take the first step towards a bright future. Our admission process is simple and transparent.
+                Take the first step towards a bright future. Our admission
+                process is simple and transparent.
               </p>
               <div className="mt-6 space-y-2">
                 <div className="flex items-center gap-2">
@@ -75,9 +80,7 @@ export function ContactCTASection() {
               </div>
               <div className="mt-6">
                 <Link href="/admission">
-                  <Button className="w-full">
-                    Start Your Application
-                  </Button>
+                  <Button className="w-full">Start Your Application</Button>
                 </Link>
               </div>
             </div>
@@ -85,5 +88,5 @@ export function ContactCTASection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

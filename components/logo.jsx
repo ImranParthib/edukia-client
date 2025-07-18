@@ -1,5 +1,5 @@
-import React from "react"
-import Link from "next/link"
+import React from "react";
+import Link from "next/link";
 
 export function Logo() {
   return (
@@ -9,5 +9,5 @@ export function Logo() {
         <span className="md:hidden">MM College</span>
       </span>
     </Link>
-  )
+  );
 }

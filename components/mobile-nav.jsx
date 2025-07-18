@@ -18,11 +18,10 @@ const NAV_ITEMS = [
   {
     label: "Academics",
     href: "/academics",
-    icon: "📘",
     dropdown: true,
     items: [
       {
-        label: "Departments / Subjects",
+        label: "Departments",
         href: "/academics/departments",
       },
       {
@@ -33,32 +32,23 @@ const NAV_ITEMS = [
         label: "Class Routine",
         href: "/academics/routine",
       },
-      {
-        label: "Faculty Members",
-        href: "/academics/faculty",
-      },
     ],
   },
   {
     label: "Admission",
     href: "/admission",
-    icon: "🎓",
     dropdown: true,
     items: [
       {
-        label: "Admission Info",
-        href: "/admission/info",
+        label: "Requirements",
+        href: "/admission/requirements",
       },
       {
         label: "Admission Form",
         href: "/admission/form",
       },
       {
-        label: "Requirements",
-        href: "/admission/requirements",
-      },
-      {
-        label: "Fees & Scholarships",
+        label: "Fees",
         href: "/admission/fees",
       },
     ],
@@ -82,9 +72,9 @@ export function MobileNav() {
   const [expandedItems, setExpandedItems] = React.useState({});
 
   const toggleExpand = (index) => {
-    setExpandedItems(prev => ({
+    setExpandedItems((prev) => ({
       ...prev,
-      [index]: !prev[index]
+      [index]: !prev[index],
     }));
   };
 
@@ -104,7 +94,7 @@ export function MobileNav() {
           <div className="fixed inset-y-0 right-0 w-full max-w-xs bg-background p-6 shadow-lg z-50 overflow-y-auto">
             <div className="flex justify-between items-center">
               <Link href="/" className="text-xl font-bold text-primary">
-                MM College
+                Mohammadpur Mohila College
               </Link>
               <Button
                 variant="ghost"
@@ -125,7 +115,7 @@ export function MobileNav() {
                         className="flex w-full items-center justify-between text-base font-medium py-2 transition-colors hover:text-primary"
                       >
                         <span className="flex items-center gap-2">
-                          <span>{item.icon}</span> {item.label}
+                          {item.label}
                         </span>
                         {expandedItems[index] ? (
                           <ChevronDown className="h-4 w-4" />
