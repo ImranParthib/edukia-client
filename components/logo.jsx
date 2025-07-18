@@ -12,8 +12,8 @@ export function Logo() {
           <Image
             src="/images/mmc-logo.png"
             alt="Mohammadpur Mohila College Logo"
-            width={140}
-            height={140}
+            width={160}
+            height={160}
           />
         </div>
       </div>
