@@ -32,6 +32,10 @@ const NAV_ITEMS = [
         label: "Class Routine",
         href: "/academics/routine",
       },
+      {
+        label: "Results",
+        href: "/academics/results",
+      },
     ],
   },
   {
