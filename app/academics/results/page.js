@@ -2,7 +2,6 @@
 import { useRef, useState } from "react";
 import { studentResults } from "@/data/studentResults";
 import Image from "next/image";
-import html2pdf from "html2pdf.js";
 
 export default function ResultPage() {
   const [roll, setRoll] = useState("");
@@ -15,8 +14,9 @@ export default function ResultPage() {
     setStudent(found || null);
   };
 
-  const handleDownloadPDF = () => {
+  const handleDownloadPDF = async () => {
     if (resultRef.current) {
+      const html2pdf = (await import("html2pdf.js")).default;
       html2pdf()
         .set({
           margin: 0.5,
@@ -245,6 +245,7 @@ export default function ResultPage() {
                 </div>
               </div>
             </div>
+            
           </>
         ) : (
           <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 text-center">
