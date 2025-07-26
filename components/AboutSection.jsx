@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import Image from "next/image";
 
 export function AboutSection() {
   return (
@@ -71,11 +72,15 @@ export function AboutSection() {
             </div>
           </div>
           <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center w-full order-1 lg:order-2">
-            {/* Placeholder for about image */}
-            <div className="h-full w-full bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900 dark:to-blue-900 flex items-center justify-center">
-              <span className="text-sm sm:text-base md:text-lg text-gray-500 dark:text-gray-400 text-center px-4">
-                College History Image
-              </span>
+            <div className="relative w-full h-full">
+              <Image
+                src="/images/history.png"
+                alt="About College Image"
+                fill
+                className="object-cover"
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYa"
+              />
             </div>
           </div>
         </div>
