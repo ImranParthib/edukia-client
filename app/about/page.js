@@ -17,7 +17,7 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="container px-4 py-12 md:px-6 md:py-24">
+    <main className="  px-4 md:px-12   w-full py-12  sm:py-12 md:py-16 lg:py-24 xl:py-32 bg-gray-50 dark:bg-gray-900">
       {/* Hero section */}
       <section className="mb-16 text-center">
         <h1 className="text-4xl font-bold md:text-5xl">
