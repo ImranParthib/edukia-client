@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Phone, Mail, MapPin, Clock, ExternalLink } from "lucide-react";
 
-export function ContactCTASection() {
+export function ContactPage() {
   return (
     <section className="w-full py-12 md:py-12 lg:py-12 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
@@ -79,7 +79,7 @@ export function ContactCTASection() {
                 </div>
               </div>
               <div className="mt-6">
-                <Link href="/admission">
+                <Link href="/admission/circulars">
                   <Button className="w-full">Start Your Application</Button>
                 </Link>
               </div>

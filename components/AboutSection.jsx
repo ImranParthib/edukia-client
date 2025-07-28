@@ -74,7 +74,7 @@ export function AboutSection() {
           <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center w-full order-1 lg:order-2">
             <div className="relative w-full h-full">
               <Image
-                src="/images/about-image.png"
+                src="/images/history.png"
                 alt="About College Image"
                 fill
                 className="object-cover"
