@@ -24,7 +24,7 @@ const Footer = () => {
               Mohammadpur Mohila College
             </h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Empowering women through quality education since 1960. Excellence
+              Empowering women through quality education since 1991. Excellence
               in academics, character, and leadership.
             </p>
             <div className="flex gap-2 mt-2">
@@ -144,16 +144,16 @@ const Footer = () => {
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 flex-shrink-0" />
                 <span className="break-all">
-                  mohammadpurmohilacollege@gmail.com
+                  mmcdhaka91@gmail.com
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4 flex-shrink-0" />
-                <span>+880 2-9119941, +880 2-9111124</span>
+                <span>+01953-007320, +01710-078815</span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4 flex-shrink-0" />
-                <span>Mohammadpur, Dhaka-1207, Bangladesh</span>
+                <span>Nurjahan Road, Mohammadpur, Dhaka-1207, Dhaka, Bangladesh</span>
               </div>
             </div>
           </div>
