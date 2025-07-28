@@ -49,6 +49,11 @@ const NAV_ITEMS = [
     dropdown: true,
     items: [
       {
+        label: "circulars",
+        href: "/admission/circulars",
+      },
+
+      {
         label: "Requirements",
         href: "/admission/requirements",
       },
