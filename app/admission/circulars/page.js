@@ -12,7 +12,7 @@ const CircularsPage = () => {
       title: "HSC Admission Circular 2025-2026",
       description:
         "Complete admission guidelines, eligibility criteria, and application process for the academic year 2025-26.",
-      pdfSrc: "/images/circulars/admission_2025-26.pdf",
+      pdfSrc: "/circulars/admission_2025-2026.pdf",
       publishedDate: "July 2025",
       isLatest: true,
     },

@@ -8,6 +8,7 @@ import {
   History,
   MapPin,
 } from "lucide-react";
+import Image from "next/image";
 
 export const metadata = {
   title: "About Us | Mohammadpur Mohila College",
@@ -54,11 +55,13 @@ export default function AboutPage() {
               made significant contributions to society in various fields.
             </p>
           </div>
-          <div className="bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900 dark:to-blue-900 rounded-lg h-[300px] flex items-center justify-center">
-            <span className="text-lg text-gray-500 dark:text-gray-400">
-              Historical Timeline Image
-            </span>
-          </div>
+          <Image
+            src="/images/mmc.png"
+            alt="Historical Timeline"
+            width={600}
+            height={400}
+            className="rounded-lg shadow-lg"
+          />
         </div>
       </section>
 
@@ -183,11 +186,13 @@ export default function AboutPage() {
               access to the best resources for their education.
             </p>
           </div>
-          <div className="bg-gradient-to-r from-blue-100 to-green-100 dark:from-blue-900 dark:to-green-900 rounded-lg h-[300px] flex items-center justify-center">
-            <span className="text-lg text-gray-500 dark:text-gray-400">
-              Campus View Image
-            </span>
-          </div>
+          <Image
+            src="/images/campus-view.png"
+            alt="Campus Image"
+            width={600}
+            height={400}
+            className="rounded-lg shadow-lg"
+          />
         </div>
       </section>
     </main>

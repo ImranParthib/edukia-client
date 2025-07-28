@@ -5,42 +5,51 @@ import { Phone, Mail, MapPin, Clock, ExternalLink } from "lucide-react";
 
 export function ContactPage() {
   return (
-    <section className="w-full py-12 md:py-12 lg:py-12 bg-gray-50 dark:bg-gray-900">
+    <section className="w-full py-12 md:py-16 lg:py-20 bg-gray-50 dark:bg-gray-900 transition-colors">
       <div className="container mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-        <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
-          <div className="flex flex-col justify-center space-y-4">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+          {/* Contact Info */}
+          <div className="flex flex-col justify-center space-y-6">
+            <div className="space-y-3">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-gray-900 dark:text-white">
                 Get in Touch
               </h2>
-              <p className="text-gray-500 md:text-xl dark:text-gray-400">
+              <p className="text-gray-600 md:text-xl dark:text-gray-300">
                 Have questions? Feel free to reach out to us.
               </p>
             </div>
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
+            <div className="space-y-4 text-base">
+              <div className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-primary" />
-                <span>+880 2-9119941, +880 2-9111124</span>
+                <span className="text-gray-900 dark:text-gray-100 font-medium">
+                  +01953-007320, +01710-078815
+                </span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary" />
-                <span>mohammadpurmohilacollege@gmail.com</span>
+                <span className="text-gray-900 dark:text-gray-100 font-medium">
+                  mmcdhaka91@gmail.com
+                </span>
               </div>
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary mt-1" />
-                <span>Mohammadpur, Dhaka-1207, Bangladesh</span>
+                <span className="text-gray-900 dark:text-gray-100 font-medium">
+                  Nurjahan Road, Mohammadpur, Dhaka-1207, Dhaka, Bangladesh
+                </span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <Clock className="h-5 w-5 text-primary" />
-                <span>Office Hours: 9:00 AM - 5:00 PM (Sun-Thu)</span>
+                <span className="text-gray-900 dark:text-gray-100 font-medium">
+                  Office Hours: 9:00 AM - 5:00 PM (Sun-Thu)
+                </span>
               </div>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 mt-4">
+            <div className="flex flex-col sm:flex-row gap-4 mt-6">
               <Link href="/contact">
                 <Button className="w-full sm:w-auto">Contact Us</Button>
               </Link>
               <Link
-                href="https://maps.google.com"
+                href="https://maps.app.goo.gl/3XXbCguAuCR1UEh6A"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -51,34 +60,43 @@ export function ContactPage() {
               </Link>
             </div>
           </div>
-          <div className="space-y-4">
-            <div className="rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800">
-              <h3 className="text-2xl font-bold">Apply for Admission</h3>
-              <p className="mt-2 text-gray-500 dark:text-gray-400">
+          {/* Admission Info */}
+          <div className="space-y-6">
+            <div className="rounded-2xl bg-white p-8 shadow-lg dark:bg-gray-800 border border-gray-100 dark:border-gray-700 transition-colors">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                Apply for Admission
+              </h3>
+              <p className="mt-2 text-gray-600 dark:text-gray-300">
                 Take the first step towards a bright future. Our admission
                 process is simple and transparent.
               </p>
-              <div className="mt-6 space-y-2">
-                <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">
+              <div className="mt-8 space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white font-bold">
                     1
                   </div>
-                  <p>Download and fill the admission form</p>
+                  <p className="text-gray-900 dark:text-gray-100">
+                    Download and fill the admission form
+                  </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white font-bold">
                     2
                   </div>
-                  <p>Submit required documents</p>
+                  <p className="text-gray-900 dark:text-gray-100">
+                    Submit required documents
+                  </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white font-bold">
                     3
                   </div>
-                  <p>Appear for entrance test/interview</p>
+                  <p className="text-gray-900 dark:text-gray-100">
+                    Appear for entrance test/interview
+                  </p>
                 </div>
               </div>
-              <div className="mt-6">
+              <div className="mt-8">
                 <Link href="/admission/circulars">
                   <Button className="w-full">Start Your Application</Button>
                 </Link>
