@@ -47,7 +47,7 @@ export function HeroSection() {
           <div className="flex items-center justify-center relative order-1 lg:order-2">
             <div className="relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] xl:h-[500px] 2xl:h-[550px] w-full rounded-lg overflow-hidden">
               <Image
-                src="/images/mmc.png"
+                src="/images/history.png"
                 alt="Mohammadpur Mohila College Building"
                 fill
                 className="object-cover"
