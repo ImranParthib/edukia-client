@@ -17,7 +17,7 @@ export function AboutSection() {
                 About Our College
               </h2>
               <p className="text-sm sm:text-base md:text-lg text-gray-500 dark:text-gray-400 leading-relaxed">
-                Established in 1960, Mohammadpur Mohila College has been a
+                Established in 1991, Mohammadpur Mohila College has been a
                 beacon of women&apos;s education in Bangladesh for over six
                 decades.
               </p>
@@ -45,25 +45,25 @@ export function AboutSection() {
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 py-4">
                 <div className="flex flex-col items-center justify-center gap-1 rounded-lg bg-gray-100 px-2 sm:px-4 py-3 dark:bg-gray-800">
-                  <div className="text-lg sm:text-xl font-bold">1960</div>
+                  <div className="text-lg sm:text-xl font-bold">1991</div>
                   <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center">
                     Established
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-center gap-1 rounded-lg bg-gray-100 px-2 sm:px-4 py-3 dark:bg-gray-800">
-                  <div className="text-lg sm:text-xl font-bold">5000+</div>
+                  <div className="text-lg sm:text-xl font-bold">1600+</div>
                   <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center">
                     Students
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-center gap-1 rounded-lg bg-gray-100 px-2 sm:px-4 py-3 dark:bg-gray-800">
-                  <div className="text-lg sm:text-xl font-bold">100+</div>
+                  <div className="text-lg sm:text-xl font-bold">50+</div>
                   <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center">
                     Faculty
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-center gap-1 rounded-lg bg-gray-100 px-2 sm:px-4 py-3 dark:bg-gray-800">
-                  <div className="text-lg sm:text-xl font-bold">15</div>
+                  <div className="text-lg sm:text-xl font-bold">10</div>
                   <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center">
                     Departments
                   </div>

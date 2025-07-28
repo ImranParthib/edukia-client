@@ -20,7 +20,7 @@ export function HeroSection() {
                 </span>
               </h1>
               <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-500 dark:text-gray-400 max-w-full lg:max-w-[600px] xl:max-w-[700px] leading-relaxed">
-                Empowering women through quality education since 1960.
+                Empowering women through quality education since 1991.
                 Excellence in academics, character, and leadership.
               </p>
             </div>
