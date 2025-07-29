@@ -25,7 +25,7 @@ export function HeroSection() {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
-              <Link href="/admission" className="w-full sm:w-auto">
+              <Link href="/admission/circulars" className="w-full sm:w-auto">
                 <Button
                   variant="default"
                   className="w-full sm:w-auto inline-flex h-10 sm:h-11 md:h-12 items-center justify-center rounded-md bg-primary px-6 sm:px-8 text-sm md:text-base font-medium text-white shadow transition-colors hover:bg-primary/90"
@@ -47,7 +47,7 @@ export function HeroSection() {
           <div className="flex items-center justify-center relative order-1 lg:order-2">
             <div className="relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] xl:h-[500px] 2xl:h-[550px] w-full rounded-lg overflow-hidden">
               <Image
-                src="/images/history.png"
+                src="/images/about-image.png"
                 alt="Mohammadpur Mohila College Building"
                 fill
                 className="object-cover"

@@ -7,44 +7,38 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 export function GallerySection() {
-  // Sample gallery images (would be fetched from a database or CMS in a real implementation)
   const galleryImages = [
     {
       id: 1,
       title: "College Building",
-      // These are placeholder gradients - replace with actual images
-      placeholder:
-        "bg-gradient-to-r from-blue-200 to-blue-300 dark:from-blue-800 dark:to-blue-900",
+      url: "/gallery/college-building.png",
     },
     {
       id: 2,
-      title: "Science Lab",
-      placeholder:
-        "bg-gradient-to-r from-green-200 to-green-300 dark:from-green-800 dark:to-green-900",
+      title: "ICT Lab",
+      url: "/gallery/ict-lab.png",
     },
     {
       id: 3,
       title: "Library",
-      placeholder:
-        "bg-gradient-to-r from-amber-200 to-amber-300 dark:from-amber-800 dark:to-amber-900",
+      url: "/gallery/library.png",
     },
+
     {
       id: 4,
-      title: "Computer Lab",
-      placeholder:
-        "bg-gradient-to-r from-purple-200 to-purple-300 dark:from-purple-800 dark:to-purple-900",
+      title: "Annual Function",
+      url: "/gallery/annual-function.png",
     },
     {
       id: 5,
-      title: "Annual Function",
-      placeholder:
-        "bg-gradient-to-r from-red-200 to-red-300 dark:from-red-800 dark:to-red-900",
+      title: "Teacher's Day Celebration",
+      url: "/gallery/teachers-day.png",
     },
+
     {
       id: 6,
-      title: "Sports Day",
-      placeholder:
-        "bg-gradient-to-r from-teal-200 to-teal-300 dark:from-teal-800 dark:to-teal-900",
+      title: "Cultural Event",
+      url: "/gallery/cultural-event.png",
     },
   ];
 
@@ -65,19 +59,24 @@ export function GallerySection() {
           {galleryImages.map((image) => (
             <div
               key={image.id}
-              className="relative aspect-square overflow-hidden rounded-lg"
+              className="relative aspect-square overflow-hidden rounded-lg group border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900"
             >
-              {/* Replace with actual image when available */}
-              <div
-                className={`w-full h-full ${image.placeholder} flex items-center justify-center`}
-              >
-                <span className="text-sm text-gray-600 dark:text-gray-300">
-                  {image.title}
-                </span>
+              <Image
+                src={image.url}
+                alt={image.title}
+                fill
+                className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
+                priority={image.id === 1}
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-black/50 dark:bg-black/60 text-white text-xs md:text-sm px-2 py-1 text-center">
+                {image.title}
               </div>
             </div>
           ))}
         </div>
+{}
+        :
         <div className="text-center mt-8">
           <Link href="/gallery">
             <Button variant="outline">
