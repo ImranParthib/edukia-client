@@ -112,7 +112,7 @@ const AdmissionRequirements = () => {
                   <li className="flex items-start">
                     <span className="w-2 h-2 bg-blue-500 dark:bg-blue-300 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                     <span className="text-gray-800 dark:text-gray-100">
-                      দু'টি মোবাইল নম্বর
+                      দু&#39;টি মোবাইল নম্বর
                     </span>
                   </li>
                   <li className="flex items-start">

@@ -11,6 +11,18 @@ export function AboutSection() {
     <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24 xl:py-32 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="grid gap-6 lg:gap-8 xl:gap-12 lg:grid-cols-2 items-center">
+          <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center w-full order-1 ">
+            <div className="relative w-full h-full">
+              <Image
+                src="/images/history.png"
+                alt="About College Image"
+                fill
+                className="object-cover"
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYa"
+              />
+            </div>
+          </div>
           <div className="flex flex-col justify-center space-y-4 sm:space-y-6 order-2 lg:order-1">
             <div className="space-y-2 sm:space-y-3">
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">
@@ -69,18 +81,6 @@ export function AboutSection() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center w-full order-1 lg:order-2">
-            <div className="relative w-full h-full">
-              <Image
-                src="/images/history.png"
-                alt="About College Image"
-                fill
-                className="object-cover"
-                placeholder="blur"
-                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYa"
-              />
             </div>
           </div>
         </div>
