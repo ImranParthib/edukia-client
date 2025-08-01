@@ -17,7 +17,6 @@ const NAV_ITEMS = [
   },
   {
     label: "Academics",
-    href: "/academics",
     dropdown: true,
     items: [
       {
@@ -40,11 +39,10 @@ const NAV_ITEMS = [
   },
   {
     label: "Admission",
-    href: "/admission",
     dropdown: true,
     items: [
       {
-        label: "circulars",
+        label: "Circulars",
         href: "/admission/circulars",
       },
       {
@@ -128,7 +126,11 @@ export function MobileNav() {
                         <div>
                           <button
                             onClick={() => toggleExpand(index)}
-                            className="flex w-full items-center justify-between text-base font-medium py-3 px-2 transition-colors hover:text-primary hover:bg-accent rounded-md"
+                            className="flex w-full items-center justify-between text-base font-medium py-3 px-2 transition-colors hover:text-primary hover:bg-accent rounded-md cursor-pointer select-none"
+                            tabIndex={0}
+                            aria-haspopup="menu"
+                            aria-expanded={!!expandedItems[index]}
+                            type="button"
                           >
                             <span className="flex items-center gap-2">
                               {item.label}
@@ -139,20 +141,22 @@ export function MobileNav() {
                               <ChevronRight className="h-4 w-4" />
                             )}
                           </button>
-                          {expandedItems[index] && (
-                            <div className="pl-4 py-1 space-y-1 border-l border-gray-200 dark:border-gray-700 ml-2 my-1">
-                              {item.items.map((subItem, subIndex) => (
-                                <Link
-                                  key={subIndex}
-                                  href={subItem.href}
-                                  onClick={() => setOpen(false)}
-                                  className="block py-2 px-2 text-sm transition-colors hover:text-primary hover:bg-accent rounded-md"
-                                >
-                                  {subItem.label}
-                                </Link>
-                              ))}
-                            </div>
-                          )}
+                          <div
+                            className={`pl-4 py-1 space-y-1 border-l border-gray-200 dark:border-gray-700 ml-2 my-1 ${
+                              expandedItems[index] ? "block" : "hidden"
+                            }`}
+                          >
+                            {item.items.map((subItem, subIndex) => (
+                              <Link
+                                key={subIndex}
+                                href={subItem.href}
+                                onClick={() => setOpen(false)}
+                                className="block py-2 px-2 text-sm transition-colors hover:text-primary hover:bg-accent rounded-md"
+                              >
+                                {subItem.label}
+                              </Link>
+                            ))}
+                          </div>
                         </div>
                       ) : (
                         <Link
