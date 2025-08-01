@@ -6,11 +6,20 @@ const Circular = () => {
   const circulars = [
     {
       id: 1,
-      title: "HSC Admission Circular 2025-2026",
+      title: "মোহাম্মদপুর মহিলা কলেজে অনার্স ১ম বর্ষে ভর্তি বিজ্ঞপ্তি",
       description:
-        "Complete admission guidelines, eligibility criteria, and application process for the academic year 2025-26.",
+        "জাতীয় বিশ্ববিদ্যালয়ের অধীনে 2025-26.শিক্ষাবর্ষে ১ম বর্ষ অনার্স কোর্সে ছাত্রী ভর্তির অনলাইন প্রাথমিক আবেদন চলছে",
       pdfSrc: "/circulars/admission_2025-2026.pdf",
       publishedDate: "July 2025",
+      isLatest: true,
+    },
+    {
+      id: 2,
+      title: "মোহাম্মদপুর মহিলা কলেজে অনার্স প্রফেশনাল কোর্সে ভর্তি চলছে",
+      description:
+        "জাতীয় বিশ্ববিদ্যালয়ের অধীনে ২০২৪-২০২৫ শিক্ষাবর্ষে মোহাম্মদপুর মহিলা কলেজে ১ম বর্ষ স্নাতক (সম্মান) প্রফেশনাল কোর্সে ছাত্রী ভতির আবেদন চলছে।",
+      pdfSrc: "/circulars/professional_admission.pdf",
+      publishedDate: "June 2025",
       isLatest: true,
     },
   ];
