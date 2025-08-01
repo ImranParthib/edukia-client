@@ -12,7 +12,7 @@ const FeesPage = () => {
       hostelInfo: {
         hostelAdmissionFee: "৳৪,০০০/-",
         seatRent: "৳২,০০০/-",
-        foodAllowance: "৳২,৫০০/- মাসিক ফি (১২×২৫০০=৩০,০০০/-)",
+        foodAllowance: "৳৩,০০০/- মাসিক ফি (১২ × ৩,০০০ = ৳৩৬,০০০/-)",
         note: "(একাদশীন / ৩ কিস্তিতে পরিশোধযোগ্য)",
       },
       monthlyTuition: "৳৭০০/- প্রতি মাসে",

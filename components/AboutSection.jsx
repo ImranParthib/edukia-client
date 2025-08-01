@@ -91,7 +91,10 @@ export function AboutSection() {
             academically, personally, and professionally.
           </p>
           <Link href="/about">
-            <Button variant="outline" className="w-full sm:w-auto">
+            <Button
+              variant="outline"
+              className="w-full sm:w-auto inline-flex h-10 sm:h-11 md:h-12 items-center justify-center rounded-md bg-primary px-6 sm:px-8 text-sm md:text-base font-medium text-white shadow transition-colors hover:bg-primary/90 dark:hover:bg-primary dark:text-gray-100 dark:bg-primary/80"
+            >
               Learn More About Us
             </Button>
           </Link>

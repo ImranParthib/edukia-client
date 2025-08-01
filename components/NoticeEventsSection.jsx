@@ -129,7 +129,9 @@ export function NoticeEventsSection() {
             </div>
             <div className="text-center">
               <Link href="/notice">
-                <Button variant="outline">View All Notices</Button>
+                <Button variant="outline" className="dark:hover:text-primary">
+                  View All Notices
+                </Button>
               </Link>
             </div>
           </TabsContent>

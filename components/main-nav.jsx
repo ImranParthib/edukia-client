@@ -22,7 +22,6 @@ const NAV_ITEMS = [
   },
   {
     label: "Academics",
-    href: "/academics",
     dropdown: true,
     items: [
       {
@@ -45,14 +44,12 @@ const NAV_ITEMS = [
   },
   {
     label: "Admission",
-    href: "/admission",
     dropdown: true,
     items: [
       {
-        label: "circulars",
+        label: "Circulars",
         href: "/admission/circulars",
       },
-
       {
         label: "Requirements",
         href: "/admission/requirements",
@@ -95,6 +92,10 @@ export function MainNav({ className, ...props }) {
                 <Button
                   variant="ghost"
                   className="flex items-center gap-1 text-xs xl:text-sm font-medium transition-colors hover:text-primary py-1.5 px-2 xl:px-3 h-auto whitespace-nowrap"
+                  aria-haspopup="menu"
+                  tabIndex={0}
+                  type="button"
+                  // No href, not clickable
                 >
                   {item.label}{" "}
                   <ChevronDown className="h-3 w-3 xl:h-3.5 xl:w-3.5" />

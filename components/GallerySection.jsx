@@ -43,7 +43,7 @@ export function GallerySection() {
   ];
 
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32">
+    <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
@@ -75,13 +75,14 @@ export function GallerySection() {
             </div>
           ))}
         </div>
-{}
-        :
+        {}:
         <div className="text-center mt-8">
           <Link href="/gallery">
-            <Button variant="outline">
+            <Button
+              variant="outline"
+              className="w-full sm:w-auto inline-flex h-10 sm:h-11 md:h-12 items-center justify-center rounded-md bg-primary px-6 sm:px-8 text-sm md:text-base font-medium text-white shadow transition-colors hover:bg-primary/90 dark:hover:bg-primary dark:text-gray-100 dark:bg-primary/80"
+            >
               View Full Gallery
-              <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
         </div>

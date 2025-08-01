@@ -1,0 +1,122 @@
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import {
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+  Mail,
+  Phone,
+  MapPin,
+} from "lucide-react";
+
+const Footer = () => {
+  return (
+    <footer className="border-t border-border bg-background text-foreground">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          {/* College Info */}
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold">Mohammadpur Mohila College</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Empowering women through quality education since 1991. Excellence
+              in academics, character, and leadership.
+            </p>
+            <div className="flex gap-2 pt-2">
+              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, idx) => (
+                <Button
+                  key={idx}
+                  variant="ghost"
+                  size="icon"
+                  className="hover:bg-accent transition-colors"
+                  aria-label={Icon.name}
+                >
+                  <Icon className="h-5 w-5" />
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
+            <ul className="space-y-2 text-sm">
+              {[
+                { label: "About Us", href: "/about" },
+                { label: "Academics", href: "/academics" },
+                { label: "Admission", href: "/admission" },
+                { label: "Notice", href: "/notice" },
+                { label: "Contact", href: "/contact" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="hover:text-primary transition-all hover:underline underline-offset-4"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Support */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Support</h3>
+            <ul className="space-y-2 text-sm">
+              {["Help Center", "Privacy Policy", "Terms of Service", "FAQ"].map((item, index) => (
+                <li key={index}>
+                  <a href="#" className="hover:text-primary hover:underline underline-offset-4">
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold mb-3">Contact Info</h3>
+            <ul className="space-y-3 text-sm">
+              <li className="flex items-start gap-2">
+                <Mail className="h-4 w-4 mt-0.5" />
+                <span className="break-words">mmcdhaka91@gmail.com</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Phone className="h-4 w-4 mt-0.5" />
+                <span>+01953-007320, +01710-078815</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <MapPin className="h-4 w-4 mt-0.5" />
+                <span>
+                  Nurjahan Road, Mohammadpur,<br />Dhaka-1207, Bangladesh
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <Separator className="my-8" />
+
+        {/* Bottom Footer */}
+        <div className="flex flex-col sm:flex-row justify-between items-center text-xs text-muted-foreground gap-4">
+          <p>&copy; {new Date().getFullYear()} Mohammadpur Mohila College. All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            {["Privacy", "Terms", "Cookies"].map((item, idx) => (
+              <a
+                key={idx}
+                href="#"
+                className="hover:text-primary hover:underline underline-offset-4"
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
