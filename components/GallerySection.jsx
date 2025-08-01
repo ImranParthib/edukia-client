@@ -78,9 +78,11 @@ export function GallerySection() {
         {}:
         <div className="text-center mt-8">
           <Link href="/gallery">
-            <Button variant="outline">
+            <Button
+              variant="outline"
+              className="w-full sm:w-auto inline-flex h-10 sm:h-11 md:h-12 items-center justify-center rounded-md bg-primary px-6 sm:px-8 text-sm md:text-base font-medium text-white shadow transition-colors hover:bg-primary/90 dark:hover:bg-primary dark:text-gray-100 dark:bg-primary/80"
+            >
               View Full Gallery
-              <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
         </div>
