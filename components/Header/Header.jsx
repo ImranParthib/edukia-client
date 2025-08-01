@@ -120,7 +120,7 @@ const MobileNav = () => {
                     <div>
                       <button
                         onClick={() => toggleExpand(index)}
-                        className="flex w-full items-center justify-between text-base font-medium py-3 px-2 transition-colors hover:text-white hover:bg-accent rounded-md cursor-pointer select-none"
+                        className="flex w-full items-center justify-between text-base font-medium py-3 px-2 transition-colors hover:text-white text-white rounded-md cursor-pointer select-none"
                         tabIndex={0}
                         aria-haspopup="menu"
                         aria-expanded={!!expandedItems[index]}
@@ -144,7 +144,7 @@ const MobileNav = () => {
                           <Link
                             key={subIndex}
                             href={subItem.href}
-                            className="block py-2 px-2 text-sm transition-colors hover:text-primary hover:bg-accent rounded-md"
+                            className="block py-2 px-2 text-sm transition-colors hover:text-white hover:bg-accent rounded-md"
                           >
                             {subItem.label}
                           </Link>
@@ -154,7 +154,7 @@ const MobileNav = () => {
                   ) : (
                     <Link
                       href={item.href}
-                      className="block text-base  font-medium py-3 px-2 transition-colors hover:text-white hover:bg-accent rounded-md"
+                      className="block text-base text-white font-medium py-3 px-2 transition-colors hover:text-white hover:bg-accent rounded-md"
                     >
                       {item.label}
                     </Link>
