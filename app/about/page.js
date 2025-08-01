@@ -39,7 +39,7 @@ export default function AboutPage() {
         <div className="grid gap-8 lg:grid-cols-2">
           <div>
             <p className="text-lg mb-4">
-              Mohammadpur Mohila College was established in 1960 with a vision
+              Mohammadpur Mohila College was established in 1991 with a vision
               to provide quality education to women in Bangladesh. The college
               started its journey with a small number of students and limited
               resources.
