@@ -67,7 +67,7 @@ const MobileNav = () => (
 
 const Header = () => {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
+    <header className="sticky top-0 z-50 w-full border-b   backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-2 md:py-2.5 flex justify-between items-center min-h-[56px] sm:min-h-[60px] md:min-h-[64px]">
         <div className="flex items-center gap-1 sm:gap-2 flex-1 min-w-0">
           <Logo />

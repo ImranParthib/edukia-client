@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ModeToggle } from "@/components/mode-toggle";
 import {
   Facebook,
   Twitter,
@@ -14,52 +13,28 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-background text-foreground border-t border-border transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-        {/* Main Footer Content */}
-        <div className="py-10 sm:py-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="border-t border-border bg-background text-foreground">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* College Info */}
-          <div className="space-y-4 sm:col-span-2 lg:col-span-1">
-            <h3 className="text-xl font-bold tracking-tight">
-              Mohammadpur Mohila College
-            </h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold">Mohammadpur Mohila College</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
               Empowering women through quality education since 1991. Excellence
               in academics, character, and leadership.
             </p>
-            <div className="flex gap-2 mt-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Facebook"
-                className="hover:bg-accent"
-              >
-                <Facebook className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Twitter"
-                className="hover:bg-accent"
-              >
-                <Twitter className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Instagram"
-                className="hover:bg-accent"
-              >
-                <Instagram className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Linkedin"
-                className="hover:bg-accent"
-              >
-                <Linkedin className="h-5 w-5" />
-              </Button>
+            <div className="flex gap-2 pt-2">
+              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, idx) => (
+                <Button
+                  key={idx}
+                  variant="ghost"
+                  size="icon"
+                  className="hover:bg-accent transition-colors"
+                  aria-label={Icon.name}
+                >
+                  <Icon className="h-5 w-5" />
+                </Button>
+              ))}
             </div>
           </div>
 
@@ -67,46 +42,22 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              <li>
-                <a
-                  href="/about"
-                  className="hover:text-primary transition-colors"
-                >
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/academics"
-                  className="hover:text-primary transition-colors"
-                >
-                  Academics
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/admission"
-                  className="hover:text-primary transition-colors"
-                >
-                  Admission
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/notice"
-                  className="hover:text-primary transition-colors"
-                >
-                  Notice
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/contact"
-                  className="hover:text-primary transition-colors"
-                >
-                  Contact
-                </a>
-              </li>
+              {[
+                { label: "About Us", href: "/about" },
+                { label: "Academics", href: "/academics" },
+                { label: "Admission", href: "/admission" },
+                { label: "Notice", href: "/notice" },
+                { label: "Contact", href: "/contact" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="hover:text-primary transition-all hover:underline underline-offset-4"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -114,69 +65,53 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-3">Support</h3>
             <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="hover:text-primary transition-colors">
-                  Help Center
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-primary transition-colors">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-primary transition-colors">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-primary transition-colors">
-                  FAQ
-                </a>
-              </li>
+              {["Help Center", "Privacy Policy", "Terms of Service", "FAQ"].map((item, index) => (
+                <li key={index}>
+                  <a href="#" className="hover:text-primary hover:underline underline-offset-4">
+                    {item}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Contact Info */}
-          <div className="space-y-4 sm:col-span-2 lg:col-span-1">
+          <div className="space-y-4">
             <h3 className="text-lg font-semibold mb-3">Contact Info</h3>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 flex-shrink-0" />
-                <span className="break-all">
-                  mmcdhaka91@gmail.com
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 flex-shrink-0" />
+            <ul className="space-y-3 text-sm">
+              <li className="flex items-start gap-2">
+                <Mail className="h-4 w-4 mt-0.5" />
+                <span className="break-words">mmcdhaka91@gmail.com</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Phone className="h-4 w-4 mt-0.5" />
                 <span>+01953-007320, +01710-078815</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 flex-shrink-0" />
-                <span>Nurjahan Road, Mohammadpur, Dhaka-1207, Dhaka, Bangladesh</span>
-              </div>
-            </div>
+              </li>
+              <li className="flex items-start gap-2">
+                <MapPin className="h-4 w-4 mt-0.5" />
+                <span>
+                  Nurjahan Road, Mohammadpur,<br />Dhaka-1207, Bangladesh
+                </span>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <Separator className="my-6 bg-border" />
+        <Separator className="my-8" />
 
         {/* Bottom Footer */}
-        <div className="py-4 flex flex-col sm:flex-row justify-between items-center text-xs text-muted-foreground gap-4">
-          <p className="text-center sm:text-left">
-            &copy; {new Date().getFullYear()} Mohammadpur Mohila College. All
-            rights reserved.
-          </p>
+        <div className="flex flex-col sm:flex-row justify-between items-center text-xs text-muted-foreground gap-4">
+          <p>&copy; {new Date().getFullYear()} Mohammadpur Mohila College. All rights reserved.</p>
           <div className="flex items-center gap-4">
-            <a href="#" className="hover:text-primary transition-colors">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-primary transition-colors">
-              Terms
-            </a>
-            <a href="#" className="hover:text-primary transition-colors">
-              Cookies
-            </a>
+            {["Privacy", "Terms", "Cookies"].map((item, idx) => (
+              <a
+                key={idx}
+                href="#"
+                className="hover:text-primary hover:underline underline-offset-4"
+              >
+                {item}
+              </a>
+            ))}
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export function HeroSection() {
   return (
-    <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24 xl:py-32 2xl:py-48">
+    <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24 xl:py-32 2xl:py-48 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-8 xl:gap-12 items-center">
           <div className="flex flex-col justify-center space-y-3 sm:space-y-4 lg:space-y-6 order-2 lg:order-1">
