@@ -2,9 +2,24 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  ChevronRight,
+  GraduationCap,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import Image from "next/image";
+import { Logo } from "./logo";
 
 const NAV_ITEMS = [
   {
@@ -84,105 +99,116 @@ export function MobileNav() {
     }));
   };
 
+  const handleLinkClick = () => {
+    setOpen(false);
+    setExpandedItems({});
+  };
+
   return (
     <div className="lg:hidden">
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={() => setOpen(true)}
-        className="lg:hidden h-9 w-9"
-        aria-label="Open mobile menu"
-      >
-        <Menu className="h-5 w-5" />
-      </Button>
-      {open && (
-        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm">
-          <div className="fixed inset-y-0 right-0 w-full max-w-xs sm:max-w-sm bg-background border-l shadow-lg z-50 overflow-y-auto">
-            <div className="flex flex-col h-full">
-              <div className="flex justify-between items-center p-4 sm:p-6 border-b">
-                <Link
-                  href="/"
-                  className="text-lg sm:text-xl font-bold text-primary truncate"
-                  onClick={() => setOpen(false)}
-                >
-                  MMC
-                </Link>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setOpen(false)}
-                  aria-label="Close mobile menu"
-                  className="h-9 w-9 flex-shrink-0"
-                >
-                  <X className="h-5 w-5" />
-                </Button>
-              </div>
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="lg:hidden h-9 w-9 text-foreground hover:text-primary hover:bg-accent/50 transition-all duration-200"
+            aria-label="Open mobile menu"
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent
+          side="left"
+          className="w-[300px] sm:w-[350px] p-0 bg-background/95 backdrop-blur-md border-l border-border/50"
+        >
+          <div className="flex flex-col h-full">
+            {/* Header */}
+            <SheetHeader className="p-6 border-b border-border/50 bg-gradient-to-r from-primary/5 to-accent/5">
+              <SheetTitle className="flex items-center gap-3 text-left">
+                <Logo />
+              </SheetTitle>
+            </SheetHeader>
 
-              <div className="flex-1 p-4 sm:p-6">
-                <div className="flex flex-col space-y-1">
-                  {NAV_ITEMS.map((item, index) => (
-                    <div key={index} className="py-1">
-                      {item.dropdown ? (
-                        <div>
-                          <button
-                            onClick={() => toggleExpand(index)}
-                            className="flex w-full items-center justify-between text-base font-medium py-3 px-2 transition-colors hover:text-primary hover:bg-accent rounded-md cursor-pointer select-none"
-                            tabIndex={0}
-                            aria-haspopup="menu"
-                            aria-expanded={!!expandedItems[index]}
-                            type="button"
-                          >
-                            <span className="flex items-center gap-2">
-                              {item.label}
-                            </span>
-                            {expandedItems[index] ? (
-                              <ChevronDown className="h-4 w-4" />
-                            ) : (
-                              <ChevronRight className="h-4 w-4" />
-                            )}
-                          </button>
-                          <div
-                            className={`pl-4 py-1 space-y-1 border-l border-gray-200 dark:border-gray-700 ml-2 my-1 ${
-                              expandedItems[index] ? "block" : "hidden"
+            {/* Navigation */}
+            <div className="flex-1 p-6 overflow-y-auto">
+              <nav className="space-y-2">
+                {NAV_ITEMS.map((item, index) => (
+                  <div key={index} className="space-y-1">
+                    {item.dropdown ? (
+                      <div className="space-y-1">
+                        <button
+                          onClick={() => toggleExpand(index)}
+                          className="flex w-full items-center justify-between text-sm font-medium py-3 px-4 text-foreground hover:text-primary hover:bg-accent/50 rounded-xl transition-all duration-200 group"
+                          tabIndex={0}
+                          aria-haspopup="menu"
+                          aria-expanded={!!expandedItems[index]}
+                          type="button"
+                        >
+                          <span className="flex items-center gap-3">
+                            {item.label}
+                          </span>
+                          <ChevronDown
+                            className={`h-4 w-4 transition-transform duration-200 ${
+                              expandedItems[index] ? "rotate-180" : ""
                             }`}
-                          >
+                          />
+                        </button>
+                        <div
+                          className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                            expandedItems[index]
+                              ? "max-h-96 opacity-100"
+                              : "max-h-0 opacity-0"
+                          }`}
+                        >
+                          <div className="pl-4 py-2 space-y-1 border-l-2 border-primary/20 ml-4">
                             {item.items.map((subItem, subIndex) => (
                               <Link
                                 key={subIndex}
                                 href={subItem.href}
-                                onClick={() => setOpen(false)}
-                                className="block py-2 px-2 text-sm transition-colors hover:text-primary hover:bg-accent rounded-md"
+                                onClick={handleLinkClick}
+                                className="block py-2.5 px-4 text-sm text-muted-foreground hover:text-primary hover:bg-accent/30 rounded-lg transition-all duration-200 hover:translate-x-1"
                               >
                                 {subItem.label}
                               </Link>
                             ))}
                           </div>
                         </div>
-                      ) : (
-                        <Link
-                          href={item.href}
-                          onClick={() => setOpen(false)}
-                          className="block text-base font-medium py-3 px-2 transition-colors hover:text-primary hover:bg-accent rounded-md"
-                        >
-                          {item.label}
-                        </Link>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
+                      </div>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        onClick={handleLinkClick}
+                        className="flex items-center text-sm font-medium py-3 px-4 text-foreground hover:text-primary hover:bg-accent/50 rounded-xl transition-all duration-200 group"
+                      >
+                        {item.label}
+                      </Link>
+                    )}
+                  </div>
+                ))}
+              </nav>
+            </div>
 
-              <div className="p-4 sm:p-6 border-t">
-                <Button className="w-full" asChild>
-                  <Link href="/admission/form" onClick={() => setOpen(false)}>
+            {/* Footer */}
+            <div className="p-6 border-t border-border/50 bg-gradient-to-r from-primary/5 to-accent/5">
+              <div className="space-y-3">
+                <Button
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02]"
+                  asChild
+                >
+                  <Link href="/admission/form" onClick={handleLinkClick}>
                     Apply Now
                   </Link>
                 </Button>
+                <div className="text-center">
+                  <p className="text-xs text-muted-foreground">
+                    Building Trust and Excellence in Education
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

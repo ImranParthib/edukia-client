@@ -4,9 +4,10 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export function GallerySection() {
+  const pathname = usePathname();
   const galleryImages = [
     {
       id: 1,
@@ -20,23 +21,28 @@ export function GallerySection() {
     },
     {
       id: 3,
-      title: "Library",
-      url: "/gallery/library.png",
+      title: "Tree Plantation",
+      url: "/gallery/tree-plant.png",
+    },
+    {
+      id: 4,
+      title: "Back to July",
+      url: "/gallery/back-to-july.png",
     },
 
     {
-      id: 4,
+      id: 5,
       title: "Annual Function",
       url: "/gallery/annual-function.png",
     },
     {
-      id: 5,
+      id: 6,
       title: "Teacher's Day Celebration",
       url: "/gallery/teachers-day.png",
     },
 
     {
-      id: 6,
+      id: 7,
       title: "Cultural Event",
       url: "/gallery/cultural-event.png",
     },
@@ -75,17 +81,18 @@ export function GallerySection() {
             </div>
           ))}
         </div>
-        {}
-        <div className="text-center mt-8">
-          <Link href="/gallery">
-            <Button
-              variant="outline"
-              className="w-full sm:w-auto inline-flex h-10 sm:h-11 md:h-12 items-center justify-center rounded-md bg-primary px-6 sm:px-8 text-sm md:text-base font-medium text-white shadow transition-colors hover:bg-primary/90 dark:hover:bg-primary dark:text-gray-100 dark:bg-primary/80"
-            >
-              View Full Gallery
-            </Button>
-          </Link>
-        </div>
+        {pathname !== "/gallery" && (
+          <div className="text-center mt-8">
+            <Link href="/gallery">
+              <Button
+                variant="outline"
+                className="w-full sm:w-auto inline-flex h-10 sm:h-11 md:h-12 items-center justify-center rounded-md bg-primary px-6 sm:px-8 text-sm md:text-base font-medium text-white shadow transition-colors hover:bg-primary/90 dark:hover:bg-primary dark:text-gray-100 dark:bg-primary/80"
+              >
+                View Full Gallery
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
