@@ -91,22 +91,24 @@ export function MainNav({ className, ...props }) {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="flex items-center gap-1 text-sm xl:text-lg font-medium transition-colors hover:text-primary py-1.5 px-2 xl:px-3 h-auto whitespace-nowrap"
+                  className="flex items-center gap-1 text-sm xl:text-base font-medium transition-all duration-200 hover:text-primary hover:bg-accent/50 py-1.5 px-2 xl:px-3 h-auto whitespace-nowrap rounded-lg"
                   aria-haspopup="menu"
                   tabIndex={0}
                   type="button"
-                  // No href, not clickable
                 >
                   {item.label}{" "}
-                  <ChevronDown className="h-3 w-3 xl:h-3.5 xl:w-3.5" />
+                  <ChevronDown className="h-3 w-3 xl:h-3.5 xl:w-3.5 transition-transform duration-200 group-hover:rotate-180" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-44 xl:w-48">
+              <DropdownMenuContent
+                align="start"
+                className="w-48 xl:w-52 bg-background/95 backdrop-blur-md border border-border/50 shadow-xl"
+              >
                 {item.items.map((subItem, subIndex) => (
                   <DropdownMenuItem key={subIndex} asChild>
                     <Link
                       href={subItem.href}
-                      className="w-full cursor-pointer text-xs xl:text-base font-medium transition-colors hover:text-primary py-1.5 px-2 xl:px-3 whitespace-nowrap"
+                      className="w-full cursor-pointer text-sm xl:text-base font-medium transition-all duration-200 hover:text-primary hover:bg-accent/50 py-2 px-3 xl:px-4 whitespace-nowrap rounded-md"
                     >
                       {subItem.label}
                     </Link>
@@ -117,7 +119,7 @@ export function MainNav({ className, ...props }) {
           ) : (
             <Link
               href={item.href}
-              className="text-xs xl:text-lg font-medium transition-colors hover:text-primary py-1.5 px-2 xl:px-3 whitespace-nowrap"
+              className="text-sm xl:text-base font-medium transition-all duration-200 hover:text-primary hover:bg-accent/50 py-1.5 px-2 xl:px-3 whitespace-nowrap rounded-lg"
             >
               {item.label}
             </Link>
