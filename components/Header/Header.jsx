@@ -144,7 +144,7 @@ const MobileNav = () => {
                           <Link
                             key={subIndex}
                             href={subItem.href}
-                            className="block py-2 px-2 text-sm transition-colors hover:text-white hover:bg-accent rounded-md"
+                            className="block py-2 px-2 text-base transition-colors hover:text-white hover:bg-accent rounded-md"
                           >
                             {subItem.label}
                           </Link>
@@ -187,7 +187,7 @@ const Header = () => {
           <Button
             variant="default"
             size="sm"
-            className="hidden lg:flex h-8 px-3 text-xs font-medium whitespace-nowrap"
+            className="hidden lg:flex h-8 px-3 text-base font-medium whitespace-nowrap"
             asChild
           >
             <Link href="/admission/circulars">Apply Now</Link>

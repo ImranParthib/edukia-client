@@ -81,7 +81,7 @@ const NAV_ITEMS = [
 export function MainNav({ className, ...props }) {
   return (
     <nav
-      className="hidden lg:flex gap-3 xl:gap-4 2xl:gap-6 items-center"
+      className="hidden lg:flex gap-2 xl:gap-2 2xl:gap-4 items-center"
       {...props}
     >
       {NAV_ITEMS.map((item, index) => (
@@ -91,7 +91,7 @@ export function MainNav({ className, ...props }) {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="flex items-center gap-1 text-xs xl:text-sm font-medium transition-colors hover:text-primary py-1.5 px-2 xl:px-3 h-auto whitespace-nowrap"
+                  className="flex items-center gap-1 text-sm xl:text-lg font-medium transition-colors hover:text-primary py-1.5 px-2 xl:px-3 h-auto whitespace-nowrap"
                   aria-haspopup="menu"
                   tabIndex={0}
                   type="button"
@@ -106,7 +106,7 @@ export function MainNav({ className, ...props }) {
                   <DropdownMenuItem key={subIndex} asChild>
                     <Link
                       href={subItem.href}
-                      className="w-full cursor-pointer text-sm"
+                      className="w-full cursor-pointer text-xs xl:text-base font-medium transition-colors hover:text-primary py-1.5 px-2 xl:px-3 whitespace-nowrap"
                     >
                       {subItem.label}
                     </Link>
@@ -117,7 +117,7 @@ export function MainNav({ className, ...props }) {
           ) : (
             <Link
               href={item.href}
-              className="text-xs xl:text-sm font-medium transition-colors hover:text-primary py-1.5 px-2 xl:px-3 whitespace-nowrap"
+              className="text-xs xl:text-lg font-medium transition-colors hover:text-primary py-1.5 px-2 xl:px-3 whitespace-nowrap"
             >
               {item.label}
             </Link>
