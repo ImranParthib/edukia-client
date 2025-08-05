@@ -46,8 +46,8 @@
 :root {
   --radius: 0.625rem;
 
-  --background: oklch(0.98 0 0); /* light background */
-  --foreground: oklch(0.18 0.02 255); /* near-black text */
+  --background: oklch(0.98 0 0);
+  --foreground: oklch(29.898% 0.06976 259.324);
 
   --card: oklch(0.98 0 0);
   --card-foreground: oklch(0.18 0.02 255);
@@ -88,9 +88,8 @@
   --sidebar-ring: oklch(0.7 0.05 240);
 }
 
-
 .dark {
-  --background: oklch(0.15 0.01 270); /* near-dark navy */
+  --background: oklch(29.898% 0.06976 259.324 / 0.586); /* near-dark navy */
   --foreground: oklch(0.98 0 0); /* white text */
 
   --card: oklch(0.22 0.02 265);
@@ -131,7 +130,6 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.7 0.05 240);
 }
-
 
 @layer base {
   * {
