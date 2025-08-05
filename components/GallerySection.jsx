@@ -21,13 +21,18 @@ export function GallerySection() {
     },
     {
       id: 3,
-      title: "Tree Plantation",
+      title: "Tree Plantation for July 24",
       url: "/gallery/tree-plant.png",
     },
     {
       id: 4,
-      title: "Back to July",
+      title: "Back to July 24",
       url: "/gallery/back-to-july.png",
+    },
+    {
+      id: 5,
+      title: "Graffiti for July 24",
+      url: "/gallery/graffiti.png",
     },
 
     {
