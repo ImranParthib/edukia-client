@@ -13,8 +13,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Calendar, Bell, ChevronRight } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export function NoticeEventsSection() {
+  const pathname = usePathname();
   const notices = [
     {
       id: 1,
@@ -22,22 +24,6 @@ export function NoticeEventsSection() {
       date: "2024-01-15",
       description:
         "The Higher Secondary Certificate examination schedule for 2024 has been published.",
-      urgent: true,
-    },
-    {
-      id: 2,
-      title: "Annual Sports Day 2024",
-      date: "2024-01-20",
-      description:
-        "Join us for the annual sports day celebration with various competitions.",
-      urgent: false,
-    },
-    {
-      id: 3,
-      title: "Admission for Session 2024-25",
-      date: "2024-01-10",
-      description:
-        "Admission applications are now open for the academic session 2024-25.",
       urgent: true,
     },
   ];
@@ -127,13 +113,18 @@ export function NoticeEventsSection() {
                 </Card>
               ))}
             </div>
-            <div className="text-center">
-              <Link href="/notice">
-                <Button variant="outline" className="dark:hover:text-primary">
-                  View All Notices
-                </Button>
-              </Link>
-            </div>
+            {pathname !== "/notice" && (
+              <div className="text-center mt-8">
+                <Link href="/notice">
+                  <Button
+                    variant="outline"
+                    className="w-full sm:w-auto inline-flex h-10 sm:h-11 md:h-12 items-center justify-center rounded-md bg-primary px-6 sm:px-8 text-sm md:text-base font-medium text-white shadow transition-colors hover:bg-primary/90 dark:hover:bg-primary dark:text-gray-100 dark:bg-primary/80"
+                  >
+                    View All Notices
+                  </Button>
+                </Link>
+              </div>
+            )}
           </TabsContent>
 
           <TabsContent value="events" className="space-y-4 sm:space-y-6">
@@ -168,6 +159,7 @@ export function NoticeEventsSection() {
                 </Card>
               ))}
             </div>
+
             <div className="text-center">
               <Link href="/events">
                 <Button variant="outline">View All Events</Button>
