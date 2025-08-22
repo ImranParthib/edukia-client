@@ -13,32 +13,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Calendar, Bell, ChevronRight } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export function NoticeEventsSection() {
+  const pathname = usePathname();
   const notices = [
     {
       id: 1,
-      title: "HSC Examination 2024 Schedule Released",
-      date: "2024-01-15",
+      title: "এইচ এসসি 2025 প্রাকটিক্যাল পরীক্ষার সময়সূচী ",
+      date: "2025-08-17",
       description:
-        "The Higher Secondary Certificate examination schedule for 2024 has been published.",
-      urgent: true,
-    },
-    {
-      id: 2,
-      title: "Annual Sports Day 2024",
-      date: "2024-01-20",
-      description:
-        "Join us for the annual sports day celebration with various competitions.",
-      urgent: false,
-    },
-    {
-      id: 3,
-      title: "Admission for Session 2024-25",
-      date: "2024-01-10",
-      description:
-        "Admission applications are now open for the academic session 2024-25.",
-      urgent: true,
+        "এইচ এসসি 2025 প্রাকটিক্যাল পরীক্ষা শুরু, পরীক্ষার সময়সূচী দেয়া দেখতে ডাউনলোড  এ ক্লিক করুন ",
+
+      pdfSrc: "/notices/hsc-practical-exam-2025.pdf",
     },
   ];
 
@@ -101,11 +88,6 @@ export function NoticeEventsSection() {
             <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
               {notices.map((notice) => (
                 <Card key={notice.id} className="relative">
-                  {notice.urgent && (
-                    <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                      Urgent
-                    </div>
-                  )}
                   <CardHeader>
                     <CardTitle className="text-lg">{notice.title}</CardTitle>
                     <CardDescription className="flex items-center gap-2">
@@ -119,21 +101,45 @@ export function NoticeEventsSection() {
                     </p>
                   </CardContent>
                   <CardFooter>
-                    <Button variant="outline" size="sm" className="ml-auto">
-                      Read More
-                      <ChevronRight className="h-4 w-4 ml-1" />
-                    </Button>
+                    <Link
+                      href={notice.pdfSrc}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Download ${notice.title} PDF`}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white dark:bg-emerald-800 dark:hover:bg-emerald-900 dark:text-emerald-100 px-3 lg:px-4 py-2 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-1 lg:gap-2 text-xs lg:text-sm"
+                    >
+                      <svg
+                        className="w-3 h-3 lg:w-4 lg:h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                      </svg>
+                      <span className="hidden lg:inline">Download</span>
+                      <span className="lg:hidden">PDF</span>
+                    </Link>
                   </CardFooter>
                 </Card>
               ))}
             </div>
-            <div className="text-center">
-              <Link href="/notice">
-                <Button variant="outline" className="dark:hover:text-primary">
-                  View All Notices
-                </Button>
-              </Link>
-            </div>
+            {pathname !== "/notice" && (
+              <div className="text-center mt-8">
+                <Link href="/notice">
+                  <Button
+                    variant="outline"
+                    className="w-full sm:w-auto inline-flex h-10 sm:h-11 md:h-12 items-center justify-center rounded-md bg-primary px-6 sm:px-8 text-sm md:text-base font-medium text-white shadow transition-colors hover:bg-primary/90 dark:hover:bg-primary dark:text-gray-100 dark:bg-primary/80"
+                  >
+                    View All Notices
+                  </Button>
+                </Link>
+              </div>
+            )}
           </TabsContent>
 
           <TabsContent value="events" className="space-y-4 sm:space-y-6">
@@ -160,7 +166,11 @@ export function NoticeEventsSection() {
                     </p>
                   </CardContent>
                   <CardFooter>
-                    <Button variant="outline" size="sm" className="ml-auto">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="ml-auto hidden"
+                    >
                       Learn More
                       <ChevronRight className="h-4 w-4 ml-1" />
                     </Button>
@@ -168,11 +178,19 @@ export function NoticeEventsSection() {
                 </Card>
               ))}
             </div>
-            <div className="text-center">
-              <Link href="/events">
-                <Button variant="outline">View All Events</Button>
-              </Link>
-            </div>
+
+            {pathname !== "/notice" && (
+              <div className="text-center mt-8">
+                <Link href="/notice">
+                  <Button
+                    variant="outline"
+                    className="w-full sm:w-auto inline-flex h-10 sm:h-11 md:h-12 items-center justify-center rounded-md bg-primary px-6 sm:px-8 text-sm md:text-base font-medium text-white shadow transition-colors hover:bg-primary/90 dark:hover:bg-primary dark:text-gray-100 dark:bg-primary/80"
+                  >
+                    View All Events
+                  </Button>
+                </Link>
+              </div>
+            )}
           </TabsContent>
         </Tabs>
       </div>
