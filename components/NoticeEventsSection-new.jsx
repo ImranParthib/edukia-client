@@ -27,6 +27,18 @@ export function NoticeEventsSection() {
   const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Fallback hardcoded notices (in case Firebase fails)
+  const fallbackNotices = [
+    {
+      id: 1,
+      title: "এইচ এসসি 2025 প্রাকটিক্যাল পরীক্ষার সময়সূচী ",
+      date: "2025-08-17",
+      description:
+        "এইচ এসসি 2025 প্রাকটিক্যাল পরীক্ষা শুরু, পরীক্ষার সময়সূচী দেয়া দেখতে ডাউনলোড  এ ক্লিক করুন ",
+      pdfSrc: "/notices/hsc-practical-exam-2025.pdf",
+    },
+  ];
+
   const events = [
     {
       id: 1,
@@ -64,29 +76,19 @@ export function NoticeEventsSection() {
   const fetchNotices = async () => {
     setLoading(true);
     try {
-      console.log("🔄 Starting to fetch notices...");
       const result = await NoticeService.getHomepageNotices();
-
-      console.log("📊 Fetch result:", result);
-
-      if (result.success) {
-        console.log("✅ Success! Found notices:", result.notices.length);
-        console.log("📝 Notices array:", result.notices);
+      if (result.success && result.notices.length > 0) {
         setNotices(result.notices);
-
-        if (result.notices.length === 0) {
-          console.warn("⚠️ No notices found with showOnHomepage=true");
-        }
       } else {
-        console.error("❌ Firebase query failed:", result.error);
-        setNotices([]); // Show empty instead of fallback
+        // Use fallback notices if Firebase fails
+        console.log("Using fallback notices");
+        setNotices(fallbackNotices);
       }
     } catch (error) {
-      console.error("❌ Error fetching notices:", error);
-      setNotices([]); // Show empty instead of fallback
+      console.error("Error fetching notices:", error);
+      setNotices(fallbackNotices);
     } finally {
       setLoading(false);
-      console.log("🏁 Finished fetching notices. Loading:", false);
     }
   };
 
@@ -143,16 +145,6 @@ export function NoticeEventsSection() {
                     </CardContent>
                   </Card>
                 ))}
-              </div>
-            ) : notices.length === 0 ? (
-              <div className="text-center py-8">
-                <Bell className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">
-                  No notices available
-                </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Check back later for updates
-                </p>
               </div>
             ) : (
               <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
