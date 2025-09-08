@@ -18,14 +18,32 @@ import {
   ChevronRight,
   ExternalLink,
   Download,
+  Star,
+  Users,
+  FileText,
+  GraduationCap,
+  Info,
+  Megaphone,
+  Trophy,
+  Clock,
 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { usePathname } from "next/navigation";
 import { NoticeService } from "@/lib/services/NoticeService";
+import {
+  NOTICE_CATEGORY,
+  NOTICE_AUDIENCE,
+  CATEGORY_COLORS,
+  AUDIENCE_COLORS,
+  CATEGORY_NAMES,
+  AUDIENCE_NAMES,
+} from "@/lib/constants/notices";
 
 export function NoticeEventsSection() {
   const pathname = usePathname();
   const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   const events = [
     {
@@ -93,14 +111,106 @@ export function NoticeEventsSection() {
 
   const formatDate = (dateString) => {
     try {
-      return new Date(dateString).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
+      const date = new Date(dateString);
+      const now = new Date();
+      const diffTime = Math.abs(now - date);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays === 0) {
+        return "Today";
+      } else if (diffDays === 1) {
+        return "Yesterday";
+      } else if (diffDays <= 7) {
+        return `${diffDays} days ago`;
+      } else {
+        return date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+      }
     } catch (error) {
       return "Date not available";
     }
+  };
+
+  // Helper functions for enhanced display
+  const getCategoryIcon = (category) => {
+    const iconMap = {
+      [NOTICE_CATEGORY.EXAM]: FileText,
+      [NOTICE_CATEGORY.ADMISSION]: GraduationCap,
+      [NOTICE_CATEGORY.GENERAL]: Info,
+      [NOTICE_CATEGORY.HOLIDAY]: Calendar,
+      [NOTICE_CATEGORY.ANNOUNCEMENT]: Megaphone,
+      [NOTICE_CATEGORY.RESULTS]: Trophy,
+    };
+    return iconMap[category] || Info;
+  };
+
+  const isExpired = (expiryDate) => {
+    if (!expiryDate) return false;
+    return new Date(expiryDate) < new Date();
+  };
+
+  const formatExpiryDate = (expiryDate) => {
+    if (!expiryDate) return null;
+    try {
+      const date = new Date(expiryDate);
+      const now = new Date();
+      const diffTime = date - now;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays < 0) {
+        return { text: "Expired", type: "expired" };
+      } else if (diffDays === 0) {
+        return { text: "Expires today", type: "warning" };
+      } else if (diffDays === 1) {
+        return { text: "Expires tomorrow", type: "warning" };
+      } else if (diffDays <= 7) {
+        return { text: `Expires in ${diffDays} days`, type: "warning" };
+      } else {
+        return {
+          text: `Valid until ${date.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+          })}`,
+          type: "info",
+        };
+      }
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const sortNotices = (notices) => {
+    return [...notices].sort((a, b) => {
+      // Featured notices come first
+      if (a.featured && !b.featured) return -1;
+      if (!a.featured && b.featured) return 1;
+
+      // Then sort by date (newest first)
+      const dateA = new Date(a.createdAt || a.date);
+      const dateB = new Date(b.createdAt || b.date);
+      return dateB - dateA;
+    });
+  };
+
+  const filterNoticesByCategory = (notices, category) => {
+    if (category === "all") return notices;
+    return notices.filter((notice) => notice.category === category);
+  };
+
+  const getFilteredAndSortedNotices = () => {
+    const filtered = filterNoticesByCategory(notices, selectedCategory);
+    return sortNotices(filtered);
+  };
+
+  // Get unique categories from notices for tabs
+  const getAvailableCategories = () => {
+    const categories = [
+      ...new Set(notices.map((notice) => notice.category).filter(Boolean)),
+    ];
+    return categories;
   };
 
   return (
@@ -130,6 +240,41 @@ export function NoticeEventsSection() {
           </TabsList>
 
           <TabsContent value="notices" className="space-y-4 sm:space-y-6">
+            {/* Category Filter Tabs */}
+            <div className="flex flex-wrap gap-2 justify-center mb-6">
+              <Button
+                variant={selectedCategory === "all" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedCategory("all")}
+                className="flex items-center gap-2"
+              >
+                <Info className="w-4 h-4" />
+                All ({notices.length})
+              </Button>
+
+              {getAvailableCategories().map((category) => {
+                const CategoryIcon = getCategoryIcon(category);
+                const count = notices.filter(
+                  (n) => n.category === category
+                ).length;
+
+                return (
+                  <Button
+                    key={category}
+                    variant={
+                      selectedCategory === category ? "default" : "outline"
+                    }
+                    size="sm"
+                    onClick={() => setSelectedCategory(category)}
+                    className="flex items-center gap-2"
+                  >
+                    <CategoryIcon className="w-4 h-4" />
+                    {CATEGORY_NAMES[category] || category} ({count})
+                  </Button>
+                );
+              })}
+            </div>
+
             {loading ? (
               <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {[1, 2, 3].map((i) => (
@@ -145,81 +290,171 @@ export function NoticeEventsSection() {
                   </Card>
                 ))}
               </div>
-            ) : notices.length === 0 ? (
+            ) : getFilteredAndSortedNotices().length === 0 ? (
               <div className="text-center py-8">
                 <Bell className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                 <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">
-                  No notices available
+                  {selectedCategory === "all"
+                    ? "No notices available"
+                    : `No ${
+                        CATEGORY_NAMES[selectedCategory] ||
+                        selectedCategory.toLowerCase()
+                      } notices available`}
                 </p>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Check back later for updates
+                  {selectedCategory === "all"
+                    ? "Check back later for updates"
+                    : "Try selecting a different category"}
                 </p>
               </div>
             ) : (
               <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {notices.map((notice) => (
-                  <Card key={notice.id} className="relative">
-                    <CardHeader>
-                      <CardTitle className="text-lg">{notice.title}</CardTitle>
-                      <CardDescription className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4" />
-                        {formatDate(notice.date || notice.createdAt)}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
-                        {notice.description}
-                      </p>
-                    </CardContent>
-                    <CardFooter className="flex gap-2">
-                      {/* PDF Download (for fallback notices) */}
-                      {notice.pdfSrc && (
-                        <Link
-                          href={notice.pdfSrc}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`Download ${notice.title} PDF`}
-                          className="bg-emerald-600 hover:bg-emerald-700 text-white dark:bg-emerald-800 dark:hover:bg-emerald-900 dark:text-emerald-100 px-3 lg:px-4 py-2 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-1 lg:gap-2 text-xs lg:text-sm"
-                        >
-                          <Download className="w-3 h-3 lg:w-4 lg:h-4" />
-                          <span className="hidden lg:inline">Download</span>
-                          <span className="lg:hidden">PDF</span>
-                        </Link>
+                {getFilteredAndSortedNotices().map((notice) => {
+                  const CategoryIcon = getCategoryIcon(notice.category);
+                  const expired = isExpired(notice.expiryDate);
+                  const expiryInfo = formatExpiryDate(notice.expiryDate);
+
+                  return (
+                    <Card
+                      key={notice.id}
+                      className={`relative ${expired ? "opacity-75" : ""}`}
+                    >
+                      {/* Featured Notice Ribbon */}
+                      {notice.featured && (
+                        <div className="absolute top-0 right-0 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-2 py-1 rounded-bl-lg rounded-tr-lg z-10">
+                          <Star className="w-3 h-3 inline mr-1" />
+                          Featured
+                        </div>
                       )}
 
-                      {/* Attachments from Firebase */}
-                      {notice.attachments &&
-                        notice.attachments.length > 0 &&
-                        notice.attachments.map((attachment, index) => (
+                      <CardHeader className="pb-3">
+                        {/* Category and Validity Badges - Responsive Layout */}
+                        <div className="flex flex-col sm:flex-col sm:items-end sm:justify-between gap-2 mb-2">
+                          {/* Expired Notice Overlay */}
+                          {expired && (
+                            <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded z-10">
+                              <Clock className="w-3 h-3 inline mr-1" />
+                              Expired
+                            </div>
+                          )}
+                          {/** Category Badge */}
+                          {notice.category && (
+                            <Badge
+                              className={`${
+                                CATEGORY_COLORS[notice.category]
+                              } flex items-center gap-1`}
+                            >
+                              <CategoryIcon className="w-3 h-3" />
+                              {CATEGORY_NAMES[notice.category] ||
+                                notice.category}
+                            </Badge>
+                          )}
+                        </div>
+
+                        <CardTitle
+                          className={`text-lg leading-tight ${
+                            notice.featured ? "pr-16" : ""
+                          }`}
+                        >
+                          {notice.title}
+                        </CardTitle>
+
+                        <CardDescription className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Calendar className="h-4 w-4" />
+                            {formatDate(notice.date || notice.createdAt)}
+                          </div>
+                          {/* Audience Badge */}
+                          {notice.audience &&
+                            notice.audience !== NOTICE_AUDIENCE.ALL && (
+                              <Badge
+                                className={`${
+                                  AUDIENCE_COLORS[notice.audience]
+                                } flex items-center gap-1 text-xs`}
+                              >
+                                <Users className="w-3 h-3" />
+                                {AUDIENCE_NAMES[notice.audience]}
+                              </Badge>
+                            )}
+                        </CardDescription>
+                      </CardHeader>
+
+                      <CardContent className="pb-3">
+                        <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
+                          {notice.content || notice.description}
+                        </p>
+
+                        {/* Tags Display */}
+                        {notice.tags && notice.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mt-3">
+                            {notice.tags.slice(0, 3).map((tag, index) => (
+                              <Badge
+                                key={index}
+                                variant="outline"
+                                className="text-xs"
+                              >
+                                #{tag}
+                              </Badge>
+                            ))}
+                            {notice.tags.length > 3 && (
+                              <Badge variant="outline" className="text-xs">
+                                +{notice.tags.length - 3} more
+                              </Badge>
+                            )}
+                          </div>
+                        )}
+                      </CardContent>
+
+                      <CardFooter className="flex gap-2 pt-3">
+                        {/* PDF Download (for fallback notices) */}
+                        {notice.pdfSrc && (
                           <Link
-                            key={index}
-                            href={attachment.url || attachment.downloadURL}
+                            href={notice.pdfSrc}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-2 text-xs"
+                            aria-label={`Download ${notice.title} PDF`}
+                            className="bg-emerald-600 hover:bg-emerald-700 text-white dark:bg-emerald-800 dark:hover:bg-emerald-900 dark:text-emerald-100 px-3 lg:px-4 py-2 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-1 lg:gap-2 text-xs lg:text-sm"
                           >
-                            <ExternalLink className="w-3 h-3" />
-                            {attachment.name || "View"}
+                            <Download className="w-3 h-3 lg:w-4 lg:h-4" />
+                            <span className="hidden lg:inline">Download</span>
+                            <span className="lg:hidden">PDF</span>
                           </Link>
-                        ))}
+                        )}
 
-                      {/* View Details Button */}
-                      {notice.content && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="ml-auto"
-                          onClick={() => {
-                            // Future: implement notice details modal/page
-                            alert("Notice details will be available soon!");
-                          }}
-                        >
-                          View Details
-                        </Button>
-                      )}
-                    </CardFooter>
-                  </Card>
-                ))}
+                        {/* Attachments from Firebase */}
+                        {notice.attachments &&
+                          notice.attachments.length > 0 &&
+                          notice.attachments.map((attachment, index) => (
+                            <Link
+                              key={index}
+                              href={attachment.url || attachment.downloadURL}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-2 text-xs"
+                            >
+                              <ExternalLink className="w-3 h-3" />
+                              {attachment.name || "View"}
+                            </Link>
+                          ))}
+
+                        {/* View Details Button */}
+                        {notice.content && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="ml-auto"
+                            onClick={() => {
+                              // Future: implement notice details modal/page
+                              alert("Notice details will be available soon!");
+                            }}
+                          >
+                            View Details
+                          </Button>
+                        )}
+                      </CardFooter>
+                    </Card>
+                  );
+                })}
               </div>
             )}
 
