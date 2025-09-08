@@ -4,12 +4,19 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "dev:fast": "next dev --turbopack --port 3000",
+    "dev:debug": "next dev --turbopack --port 3000 --inspect",
     "build": "next build",
+    "build:analyze": "ANALYZE=true npm run build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",
-    "test:e2e:debug": "playwright test --debug"
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:ui": "playwright test --ui",
+    "test:quick": "playwright test --grep-invert @slow",
+    "pre-commit": "npm run lint:fix && npm run test:quick"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.14",
