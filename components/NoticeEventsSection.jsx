@@ -46,50 +46,6 @@ export function NoticeEventsSection() {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   // Fallback notices with real dates (not today's date)
-  const fallbackNotices = [
-    {
-      id: "fallback-1",
-      title: "HSC Practical Examination 2025",
-      content:
-        "Practical examination for HSC students will begin from January 15, 2025.",
-      category: "exam",
-      audience: "students",
-      publishDate: "2025-01-10T09:00:00.000Z",
-      date: "2025-01-10T09:00:00.000Z",
-      createdAt: "2025-01-10T09:00:00.000Z",
-      status: "published",
-      showOnHomepage: true,
-      featured: true,
-    },
-    {
-      id: "fallback-2",
-      title: "Admission Circular 2025-26",
-      content:
-        "Online application for admission to HSC and degree programs has started.",
-      category: "admission",
-      audience: "all",
-      publishDate: "2025-01-05T10:00:00.000Z",
-      date: "2025-01-05T10:00:00.000Z",
-      createdAt: "2025-01-05T10:00:00.000Z",
-      status: "published",
-      showOnHomepage: true,
-      featured: false,
-      pdfSrc: "/circulars/admission_2025-2026.pdf",
-    },
-    {
-      id: "fallback-3",
-      title: "Class Routine Updated",
-      content: "Updated class routine for all departments has been published.",
-      category: "general",
-      audience: "students",
-      publishDate: "2025-01-03T08:00:00.000Z",
-      date: "2025-01-03T08:00:00.000Z",
-      createdAt: "2025-01-03T08:00:00.000Z",
-      status: "published",
-      showOnHomepage: true,
-      featured: false,
-    },
-  ];
 
   const events = [
     {
@@ -228,10 +184,6 @@ export function NoticeEventsSection() {
 
   const sortNotices = (notices) => {
     return [...notices].sort((a, b) => {
-      // Featured notices come first
-      if (a.featured && !b.featured) return -1;
-      if (!a.featured && b.featured) return 1;
-
       // Then sort by date (newest first) - prioritize publishDate
       const dateA = new Date(a.publishDate || a.createdAt || a.date || 0);
       const dateB = new Date(b.publishDate || b.createdAt || b.date || 0);
@@ -368,14 +320,6 @@ export function NoticeEventsSection() {
                       key={notice.id}
                       className={`relative ${expired ? "opacity-75" : ""}`}
                     >
-                      {/* Featured Notice Ribbon */}
-                      {notice.featured && (
-                        <div className="absolute top-0 right-0 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-2 py-1 rounded-bl-lg rounded-tr-lg z-10">
-                          <Star className="w-3 h-3 inline mr-1" />
-                          Featured
-                        </div>
-                      )}
-
                       <CardHeader className="pb-3">
                         {/* Category and Validity Badges - Responsive Layout */}
                         <div className="flex flex-col sm:flex-col sm:items-end sm:justify-between gap-2 mb-2">
@@ -400,11 +344,7 @@ export function NoticeEventsSection() {
                           )}
                         </div>
 
-                        <CardTitle
-                          className={`text-lg leading-tight ${
-                            notice.featured ? "pr-16" : ""
-                          }`}
-                        >
+                        <CardTitle className="text-lg leading-tight">
                           {notice.title}
                         </CardTitle>
 
