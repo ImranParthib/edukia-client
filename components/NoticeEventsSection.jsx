@@ -45,6 +45,52 @@ export function NoticeEventsSection() {
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("all");
 
+  // Fallback notices with real dates (not today's date)
+  const fallbackNotices = [
+    {
+      id: "fallback-1",
+      title: "HSC Practical Examination 2025",
+      content:
+        "Practical examination for HSC students will begin from January 15, 2025.",
+      category: "exam",
+      audience: "students",
+      publishDate: "2025-01-10T09:00:00.000Z",
+      date: "2025-01-10T09:00:00.000Z",
+      createdAt: "2025-01-10T09:00:00.000Z",
+      status: "published",
+      showOnHomepage: true,
+      featured: true,
+    },
+    {
+      id: "fallback-2",
+      title: "Admission Circular 2025-26",
+      content:
+        "Online application for admission to HSC and degree programs has started.",
+      category: "admission",
+      audience: "all",
+      publishDate: "2025-01-05T10:00:00.000Z",
+      date: "2025-01-05T10:00:00.000Z",
+      createdAt: "2025-01-05T10:00:00.000Z",
+      status: "published",
+      showOnHomepage: true,
+      featured: false,
+      pdfSrc: "/circulars/admission_2025-2026.pdf",
+    },
+    {
+      id: "fallback-3",
+      title: "Class Routine Updated",
+      content: "Updated class routine for all departments has been published.",
+      category: "general",
+      audience: "students",
+      publishDate: "2025-01-03T08:00:00.000Z",
+      date: "2025-01-03T08:00:00.000Z",
+      createdAt: "2025-01-03T08:00:00.000Z",
+      status: "published",
+      showOnHomepage: true,
+      featured: false,
+    },
+  ];
+
   const events = [
     {
       id: 1,
@@ -111,7 +157,17 @@ export function NoticeEventsSection() {
 
   const formatDate = (dateString) => {
     try {
+      if (!dateString || dateString === null) {
+        return "Date not available";
+      }
+
       const date = new Date(dateString);
+
+      // Check if the date is valid
+      if (isNaN(date.getTime())) {
+        return "Date not available";
+      }
+
       return date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
@@ -176,10 +232,15 @@ export function NoticeEventsSection() {
       if (a.featured && !b.featured) return -1;
       if (!a.featured && b.featured) return 1;
 
-      // Then sort by date (newest first)
-      const dateA = new Date(a.createdAt || a.date);
-      const dateB = new Date(b.createdAt || b.date);
-      return dateB - dateA;
+      // Then sort by date (newest first) - prioritize publishDate
+      const dateA = new Date(a.publishDate || a.createdAt || a.date || 0);
+      const dateB = new Date(b.publishDate || b.createdAt || b.date || 0);
+
+      // Handle invalid dates
+      const validDateA = !isNaN(dateA.getTime()) ? dateA : new Date(0);
+      const validDateB = !isNaN(dateB.getTime()) ? dateB : new Date(0);
+
+      return validDateB - validDateA;
     });
   };
 
@@ -350,7 +411,12 @@ export function NoticeEventsSection() {
                         <CardDescription className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <Calendar className="h-4 w-4" />
-                            {formatDate(notice.date || notice.createdAt)}
+                            {formatDate(
+                              notice.publishDate ||
+                                notice.date ||
+                                notice.createdAt ||
+                                notice.updatedAt
+                            )}
                           </div>
                           {/* Audience Badge */}
                           {notice.audience &&
