@@ -69,21 +69,22 @@ export function NoticeEventsSection() {
 
       console.log("📊 Fetch result:", result);
 
-      if (result.success) {
+      if (result.success && result.notices.length > 0) {
         console.log("✅ Success! Found notices:", result.notices.length);
         console.log("📝 Notices array:", result.notices);
         setNotices(result.notices);
-
-        if (result.notices.length === 0) {
-          console.warn("⚠️ No notices found with showOnHomepage=true");
-        }
       } else {
-        console.error("❌ Firebase query failed:", result.error);
-        setNotices([]); // Show empty instead of fallback
+        // Use fallback notices if Firebase fails or returns empty
+        console.warn(
+          "⚠️ No notices found or Firebase failed, using fallback notices"
+        );
+        console.error("Firebase error:", result.error);
+        setNotices(fallbackNotices);
       }
     } catch (error) {
       console.error("❌ Error fetching notices:", error);
-      setNotices([]); // Show empty instead of fallback
+      console.log("🔄 Using fallback notices due to error");
+      setNotices(fallbackNotices); // Use fallback instead of empty array
     } finally {
       setLoading(false);
       console.log("🏁 Finished fetching notices. Loading:", false);
