@@ -112,23 +112,11 @@ export function NoticeEventsSection() {
   const formatDate = (dateString) => {
     try {
       const date = new Date(dateString);
-      const now = new Date();
-      const diffTime = Math.abs(now - date);
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-      if (diffDays === 0) {
-        return "Today";
-      } else if (diffDays === 1) {
-        return "Yesterday";
-      } else if (diffDays <= 7) {
-        return `${diffDays} days ago`;
-      } else {
-        return date.toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        });
-      }
+      return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
     } catch (error) {
       return "Date not available";
     }
