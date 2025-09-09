@@ -7,11 +7,11 @@
   "rewrites": [
     {
       "source": "/admin-portal",
-      "destination": "https://edukia-server.vercel.app/admin-portal"
+      "destination": "https://edukia-server.vercel.app/"
     },
     {
       "source": "/admin-portal/:path*",
-      "destination": "https://edukia-server.vercel.app/admin-portal/:path*"
+      "destination": "https://edukia-server.vercel.app/:path*"
     },
     {
       "source": "/api/admin/:path*",
