@@ -6,16 +6,20 @@
   },
   "rewrites": [
     {
+      "source": "/admin-portal/_next/:path*",
+      "destination": "https://edukia-server.vercel.app/admin-portal/_next/:path*"
+    },
+    {
       "source": "/admin-portal",
-      "destination": "https://edukia-server.vercel.app/"
+      "destination": "https://edukia-server.vercel.app/admin-portal"
     },
     {
       "source": "/admin-portal/",
-      "destination": "https://edukia-server.vercel.app/"
+      "destination": "https://edukia-server.vercel.app/admin-portal/"
     },
     {
       "source": "/admin-portal/:path*",
-      "destination": "https://edukia-server.vercel.app/:path*"
+      "destination": "https://edukia-server.vercel.app/admin-portal/:path*"
     },
     {
       "source": "/api/admin/:path*",
