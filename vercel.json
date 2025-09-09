@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "app/api/generate-pdf/route.js": {
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
     {
       "source": "/admin-portal",
@@ -7,6 +12,10 @@
     {
       "source": "/admin-portal/:path*",
       "destination": "https://edukia-server.vercel.app/admin-portal/:path*"
+    },
+    {
+      "source": "/api/admin/:path*",
+      "destination": "https://edukia-server.vercel.app/api/admin/:path*"
     }
   ],
   "headers": [
@@ -18,10 +27,25 @@
           "value": "SAMEORIGIN"
         },
         {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/_next/static/:path*",
+      "headers": [
+        {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
         }
       ]
     }
-  ]
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
 }
