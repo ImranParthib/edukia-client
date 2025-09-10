@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/admin",
+      "destination": "https://admin.mmc.ac.bd",
+      "permanent": true
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "https://admin.mmc.ac.bd/:path*",
+      "permanent": true
+    }
+  ]
+}
