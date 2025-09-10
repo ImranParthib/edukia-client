@@ -1,21 +1,14 @@
 {
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/admin-portal",
-      "destination": "https://edukia-server.vercel.app/"
+      "source": "/admin",
+      "destination": "https://admin.mmc.ac.bd",
+      "permanent": true
     },
     {
-      "source": "/admin-portal/:path*",
-      "destination": "https://edukia-server.vercel.app/:path*"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/admin-portal/:path*",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
-      ]
+      "source": "/admin/:path*",
+      "destination": "https://admin.mmc.ac.bd/:path*",
+      "permanent": true
     }
   ]
 }
