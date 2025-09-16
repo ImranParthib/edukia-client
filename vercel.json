@@ -7,7 +7,7 @@
     },
     {
       "source": "/admin/:path*",
-      "destination": "https://admin.mmc.ac.bd/:path*",
+      "destination": "https://admin.mmc.ac.bd/admin:path*",
       "permanent": true
     }
   ]
