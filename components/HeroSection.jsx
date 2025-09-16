@@ -1,12 +1,37 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { ImageSkeleton } from "@/components/ui/loading";
 
 export function HeroSection() {
+  const [imageLoading, setImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
+
+  // Try multiple image sources for better reliability
+  const imageSources = [
+    "/images/banner-image.png",
+    "/images/about-image.png",
+    "/images/campus-view.png",
+  ];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleImageLoad = () => {
+    setImageLoading(false);
+    setImageError(false);
+  };
+
+  const handleImageError = () => {
+    if (currentImageIndex < imageSources.length - 1) {
+      setCurrentImageIndex(currentImageIndex + 1);
+    } else {
+      setImageError(true);
+      setImageLoading(false);
+    }
+  };
   return (
     <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24 xl:py-32 2xl:py-48 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
@@ -46,26 +71,53 @@ export function HeroSection() {
           </div>
           <div className="flex items-center justify-center relative order-1 lg:order-2">
             <div className="relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] xl:h-[500px] 2xl:h-[550px] w-full rounded-lg overflow-hidden">
-              <Image
-                src="/images/about-image.png"
-                alt="Mohammadpur Mohila College Building"
-                fill
-                className="object-cover"
-                placeholder="blur"
-                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                  e.currentTarget.nextElementSibling.style.display = "flex";
-                }}
-              />
-              <div
-                className="absolute inset-0 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-950 dark:to-purple-950 flex items-center justify-center"
-                style={{ display: "none" }}
-              >
-                <span className="text-sm sm:text-base md:text-lg text-gray-500 dark:text-gray-400 text-center px-4">
-                  College Building Image
-                </span>
-              </div>
+              {imageLoading && (
+                <ImageSkeleton
+                  className="absolute inset-0 w-full h-full rounded-lg"
+                  aspectRatio="video"
+                />
+              )}
+
+              {!imageError && (
+                <Image
+                  src={imageSources[currentImageIndex]}
+                  alt="Mohammadpur Mohila College Building"
+                  fill
+                  className="object-cover transition-opacity duration-500"
+                  style={{ opacity: imageLoading ? 0 : 1 }}
+                  priority
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                  onLoad={handleImageLoad}
+                  onError={handleImageError}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                />
+              )}
+
+              {imageError && (
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-950 dark:to-purple-950 flex items-center justify-center">
+                  <div className="text-center space-y-3">
+                    <div className="w-16 h-16 mx-auto bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center shadow-sm">
+                      <svg
+                        className="w-8 h-8 text-gray-400"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                        />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">
+                      Mohammadpur Mohila College
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
