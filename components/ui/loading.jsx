@@ -19,15 +19,29 @@ export function LoadingSpinner({ className, size = "default", ...props }) {
   );
 }
 
-// Shimmer Animation Component
-export function ShimmerWrapper({ children, className }) {
-  return <div className={cn("animate-pulse", className)}>{children}</div>;
+// Shimmer Animation Component - For first loads
+export function ShimmerWrapper({ children, className, enabled = true }) {
+  return (
+    <div className={cn(enabled && "animate-pulse", className)}>{children}</div>
+  );
 }
 
-// Shimmer Card Component
-export function ShimmerCard({ className, showImage = true, lines = 3 }) {
+// Static Skeleton Component - For subsequent loads
+export function StaticSkeleton({ children, className }) {
+  return <div className={cn("", className)}>{children}</div>;
+}
+
+// Adaptive Card Component - Shimmer on first load, static on subsequent
+export function SkeletonCard({
+  className,
+  showImage = true,
+  lines = 3,
+  isFirstLoad = false,
+}) {
+  const Wrapper = isFirstLoad ? ShimmerWrapper : StaticSkeleton;
+
   return (
-    <ShimmerWrapper>
+    <Wrapper>
       <div className={cn("rounded-lg border p-4 space-y-3", className)}>
         {showImage && (
           <div className="h-48 bg-gray-200 dark:bg-gray-700 rounded-md" />
@@ -44,7 +58,7 @@ export function ShimmerCard({ className, showImage = true, lines = 3 }) {
           ))}
         </div>
       </div>
-    </ShimmerWrapper>
+    </Wrapper>
   );
 }
 
@@ -127,35 +141,55 @@ export function ImageSkeleton({
   );
 }
 
-// Button Loading State
+// Micro-Action Loading Button - Only for form submissions and brief actions
 export function LoadingButton({
   children,
   isLoading,
-  loadingText = "Loading...",
+  loadingText,
   disabled,
   className,
+  size = "default",
+  variant = "default",
   ...props
 }) {
+  const displayText =
+    loadingText ||
+    (typeof children === "string" ? `${children}...` : "Loading...");
+
   return (
     <button
       disabled={isLoading || disabled}
       className={cn(
-        "inline-flex items-center justify-center",
-        isLoading && "cursor-not-allowed opacity-75",
+        "inline-flex items-center justify-center rounded-md font-medium transition-colors",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "disabled:pointer-events-none disabled:opacity-50",
+        {
+          // Size variants
+          "h-9 px-3 text-sm": size === "sm",
+          "h-10 px-4 py-2": size === "default",
+          "h-11 px-8": size === "lg",
+          // Color variants
+          "bg-primary text-primary-foreground hover:bg-primary/90":
+            variant === "default",
+          "border border-input bg-background hover:bg-accent hover:text-accent-foreground":
+            variant === "outline",
+          "hover:bg-accent hover:text-accent-foreground": variant === "ghost",
+        },
+        isLoading && "cursor-not-allowed",
         className
       )}
       {...props}
     >
       {isLoading && <LoadingSpinner size="sm" className="mr-2" />}
-      {isLoading ? loadingText : children}
+      {isLoading ? displayText : children}
     </button>
   );
-}
+} // Notice Card Skeleton - Adaptive version
+export function NoticeCardSkeleton({ className, isFirstLoad = false }) {
+  const Wrapper = isFirstLoad ? ShimmerWrapper : StaticSkeleton;
 
-// Notice Card Skeleton
-export function NoticeCardSkeleton({ className }) {
   return (
-    <ShimmerWrapper>
+    <Wrapper enabled={isFirstLoad}>
       <div className={cn("rounded-lg border p-4 space-y-3", className)}>
         <div className="flex justify-between items-start">
           <div className="flex-1 space-y-2">
@@ -174,12 +208,18 @@ export function NoticeCardSkeleton({ className }) {
           <div className="h-8 w-20 bg-gray-200 dark:bg-gray-700 rounded" />
         </div>
       </div>
-    </ShimmerWrapper>
+    </Wrapper>
   );
 }
 
-// Gallery Grid Skeleton
-export function GalleryGridSkeleton({ items = 8, className }) {
+// Gallery Grid Skeleton - Adaptive version
+export function GalleryGridSkeleton({
+  items = 8,
+  className,
+  isFirstLoad = false,
+}) {
+  const Wrapper = isFirstLoad ? ShimmerWrapper : StaticSkeleton;
+
   return (
     <div
       className={cn(
@@ -188,7 +228,9 @@ export function GalleryGridSkeleton({ items = 8, className }) {
       )}
     >
       {Array.from({ length: items }, (_, i) => (
-        <ImageSkeleton key={i} aspectRatio="square" />
+        <Wrapper key={i} enabled={isFirstLoad}>
+          <ImageSkeleton aspectRatio="square" showIcon={!isFirstLoad} />
+        </Wrapper>
       ))}
     </div>
   );

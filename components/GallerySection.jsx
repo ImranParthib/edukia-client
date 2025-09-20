@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GalleryGridSkeleton } from "@/components/ui/loading";
-import { useImageLoader } from "@/hooks/use-loading";
+import { useImageLoader, useFirstLoad } from "@/hooks/use-loading";
 
 export function GallerySection() {
   const pathname = usePathname();
+  const { isFirstLoad } = useFirstLoad("gallery-section");
 
   const galleryImages = [
     {
@@ -79,6 +80,7 @@ export function GallerySection() {
           <GalleryGridSkeleton
             items={galleryImages.length}
             className="mx-auto max-w-5xl mt-12"
+            isFirstLoad={isFirstLoad}
           />
         )}
 

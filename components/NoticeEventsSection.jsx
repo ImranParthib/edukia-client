@@ -39,7 +39,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { usePathname } from "next/navigation";
 import { NoticeService } from "@/lib/services/NoticeService";
-import { NoticeCardSkeleton } from "@/components/ui/loading";
+import { NoticeCardSkeleton, SkeletonCard } from "@/components/ui/loading";
+import { useFirstLoad } from "@/hooks/use-loading";
 import {
   NOTICE_CATEGORY,
   NOTICE_AUDIENCE,
@@ -51,6 +52,7 @@ import {
 
 export function NoticeEventsSection() {
   const pathname = usePathname();
+  const { isFirstLoad } = useFirstLoad("notices-section");
   const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -455,7 +457,7 @@ export function NoticeEventsSection() {
             {loading ? (
               <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <NoticeCardSkeleton key={i} />
+                  <NoticeCardSkeleton key={i} isFirstLoad={isFirstLoad} />
                 ))}
               </div>
             ) : getFilteredAndSortedNotices().length === 0 ? (

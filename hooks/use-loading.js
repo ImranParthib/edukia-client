@@ -1,6 +1,42 @@
 import { useState, useEffect, useCallback } from "react";
 
 /**
+ * Custom hook for detecting first load vs subsequent loads
+ * @param {string} key - Unique identifier for the component/page
+ * @param {number} sessionDuration - How long to consider as "same session" in minutes
+ * @returns {object} - First load detection utilities
+ */
+export function useFirstLoad(key, sessionDuration = 30) {
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+
+  useEffect(() => {
+    try {
+      const storageKey = `first-load-${key}`;
+      const lastVisit = localStorage.getItem(storageKey);
+      const now = Date.now();
+
+      if (lastVisit) {
+        const timeDiff = now - parseInt(lastVisit);
+        const minutesDiff = timeDiff / (1000 * 60);
+
+        // If within session duration, not first load
+        if (minutesDiff < sessionDuration) {
+          setIsFirstLoad(false);
+        }
+      }
+
+      // Update last visit time
+      localStorage.setItem(storageKey, now.toString());
+    } catch (error) {
+      // Fallback if localStorage is not available
+      console.warn("localStorage not available, treating as first load");
+    }
+  }, [key, sessionDuration]);
+
+  return { isFirstLoad };
+}
+
+/**
  * Custom hook for managing image loading states
  * @param {number} totalImages - Total number of images to load
  * @param {number} threshold - Threshold percentage to consider as "loaded" (default: 70)
