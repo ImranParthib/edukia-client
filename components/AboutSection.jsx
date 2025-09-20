@@ -1,25 +1,37 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import Image from "next/image";
+import { ImageSkeleton } from "@/components/ui/loading";
 
 export function AboutSection() {
+  const [imageLoading, setImageLoading] = useState(true);
+
   return (
     <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24 xl:py-32 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="grid gap-6 lg:gap-8 xl:gap-12 lg:grid-cols-2 items-center">
-          <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center w-full order-1 ">
+          <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center w-full order-1 relative">
+            {imageLoading && (
+              <ImageSkeleton
+                className="absolute inset-0 w-full h-full"
+                aspectRatio="video"
+              />
+            )}
             <div className="relative w-full h-full">
               <Image
                 src="/images/history.png"
                 alt="About College Image"
                 fill
-                className="object-cover"
+                className="object-cover transition-opacity duration-500"
+                style={{ opacity: imageLoading ? 0 : 1 }}
                 placeholder="blur"
                 blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYa"
+                onLoad={() => setImageLoading(false)}
+                onError={() => setImageLoading(false)}
               />
             </div>
           </div>

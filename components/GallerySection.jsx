@@ -5,9 +5,13 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { GalleryGridSkeleton } from "@/components/ui/loading";
+import { useImageLoader, useFirstLoad } from "@/hooks/use-loading";
 
 export function GallerySection() {
   const pathname = usePathname();
+  const { isFirstLoad } = useFirstLoad("gallery-section");
+
   const galleryImages = [
     {
       id: 1,
@@ -53,6 +57,11 @@ export function GallerySection() {
     },
   ];
 
+  const { isLoading, handleImageLoad, handleImageError } = useImageLoader(
+    galleryImages.length,
+    0.6
+  );
+
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
@@ -66,7 +75,20 @@ export function GallerySection() {
             </p>
           </div>
         </div>
-        <div className="mx-auto grid max-w-5xl grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mt-12">
+
+        {isLoading && (
+          <GalleryGridSkeleton
+            items={galleryImages.length}
+            className="mx-auto max-w-5xl mt-12"
+            isFirstLoad={isFirstLoad}
+          />
+        )}
+
+        <div
+          className={`mx-auto grid max-w-5xl grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mt-12 transition-opacity duration-500 ${
+            isLoading ? "opacity-0 absolute" : "opacity-100"
+          }`}
+        >
           {galleryImages.map((image) => (
             <div
               key={image.id}
@@ -79,6 +101,8 @@ export function GallerySection() {
                 className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
                 priority={image.id === 1}
+                onLoad={handleImageLoad}
+                onError={handleImageError}
               />
               <div className="absolute bottom-0 left-0 right-0 bg-black/50 dark:bg-black/60 text-white text-xs md:text-sm px-2 py-1 text-center">
                 {image.title}

@@ -6,16 +6,14 @@ on:
   pull_request:
     branches: [main]
 
-# Cancel previous runs when new commits are pushed
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  lint-and-build:
+  build-and-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
+    timeout-minutes: 30
     steps:
       - name: ⬇️ Checkout code
         uses: actions/checkout@v4
@@ -25,6 +23,12 @@ jobs:
         with:
           node-version: 22
           cache: "npm"
+
+      - name: 📦 Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
 
       - name: 📦 Install dependencies
         run: npm ci --prefer-offline --no-audit --no-fund
@@ -32,36 +36,17 @@ jobs:
       - name: 🧪 Lint code
         run: npm run lint
 
-      - name: 🔧 Build project
+      - name: 🔧 Build Next.js project
         run: npm run build
         env:
           NODE_ENV: production
           NEXT_TELEMETRY_DISABLED: 1
 
-  e2e-tests:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: lint-and-build
-    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
-
-    steps:
-      - name: ⬇️ Checkout code
-        uses: actions/checkout@v4
-
-      - name: ⚙️ Set up Node.js
-        uses: actions/setup-node@v4
+      - name: 📦 Cache Next.js build cache
+        uses: actions/cache@v4
         with:
-          node-version: 22
-          cache: "npm"
-
-      - name: 📦 Install dependencies
-        run: npm ci --prefer-offline --no-audit --no-fund
-
-      - name: 🔧 Build project
-        run: npm run build
-        env:
-          NODE_ENV: production
-          NEXT_TELEMETRY_DISABLED: 1
+          path: .next/cache
+          key: nextjs-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: 📋 Cache Playwright browsers
         uses: actions/cache@v4
@@ -71,19 +56,19 @@ jobs:
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: 🕹️ Install Playwright browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps
-
-      - name: 🕹️ Install Playwright dependencies only
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
-        run: npx playwright install-deps
+        run: |
+          if [ "${{ steps.playwright-cache.outputs.cache-hit }}" != "true" ]; then
+            npx playwright install --with-deps
+          else
+            npx playwright install-deps
+          fi
 
       - name: 🚦 Run Playwright E2E tests
         run: npm run test:e2e
 
-      - name: 📊 Upload test results
-        uses: actions/upload-artifact@v4
+      - name: 📊 Upload Playwright test results
         if: failure()
+        uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: playwright-report/
