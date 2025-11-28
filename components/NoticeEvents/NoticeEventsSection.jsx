@@ -12,14 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
 import {
   Calendar,
   Bell,
@@ -49,6 +42,7 @@ import {
   CATEGORY_NAMES,
   AUDIENCE_NAMES,
 } from "@/lib/constants/notices";
+import { NoticeDetailsModal } from "./NoticeDetailsModal";
 
 export function NoticeEventsSection() {
   const pathname = usePathname();
@@ -59,77 +53,8 @@ export function NoticeEventsSection() {
   const [selectedNotice, setSelectedNotice] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Fallback notices with real dates (not today's date)
-  const fallbackNotices = [
-    {
-      id: "fallback-1",
-      title: "HSC Practical Examination 2025",
-      content:
-        "HSC Practical examinations will be held from February 15-28, 2025. Students must bring their admit cards.",
-      publishDate: "2024-12-15",
-      category: NOTICE_CATEGORY.EXAM,
-      audience: NOTICE_AUDIENCE.STUDENTS,
-      status: "published",
-      tags: ["hsc", "practical", "exam"],
-      pdfSrc: "/notices/hsc-practical-exam-2025.pdf",
-    },
-    {
-      id: "fallback-2",
-      title: "Admission Circular 2025-2026",
-      content:
-        "Applications are invited for admission to HSC program for the academic year 2025-2026.",
-      publishDate: "2024-12-10",
-      category: NOTICE_CATEGORY.ADMISSION,
-      audience: NOTICE_AUDIENCE.PUBLIC,
-      status: "published",
-      tags: ["admission", "hsc", "2025"],
-      pdfSrc: "/circulars/admission_2025-2026.pdf",
-    },
-    {
-      id: "fallback-3",
-      title: "Winter Vacation Notice",
-      content:
-        "The college will remain closed from December 25, 2024 to January 7, 2025 for winter vacation.",
-      publishDate: "2024-12-05",
-      category: NOTICE_CATEGORY.HOLIDAY,
-      audience: NOTICE_AUDIENCE.ALL,
-      status: "published",
-      tags: ["vacation", "holiday", "winter"],
-    },
-  ];
-
-  const events = [
-    {
-      id: 1,
-      title: "Cultural Program 2025",
-      date: "2025-02-14",
-      description:
-        "Annual cultural program featuring music, dance, and drama performances by our talented students.",
-      image:
-        "bg-gradient-to-r from-pink-200 to-pink-300 dark:from-pink-800 dark:to-pink-900",
-      status: "upcoming",
-    },
-    {
-      id: 2,
-      title: "Science Fair 2025",
-      date: "2025-03-15",
-      description:
-        "Students showcase innovative science projects and experiments in this annual exhibition.",
-      image:
-        "bg-gradient-to-r from-blue-200 to-blue-300 dark:from-blue-800 dark:to-blue-900",
-      status: "upcoming",
-    },
-    {
-      id: 3,
-      title: "Graduation Ceremony",
-      date: "2025-04-01",
-      description:
-        "Celebrating the achievements of our graduating students in a formal ceremony.",
-      image:
-        "bg-gradient-to-r from-green-200 to-green-300 dark:from-green-800 dark:to-green-900",
-      status: "upcoming",
-    },
-  ];
+  // Events will be fetched from database or service
+  const [events, setEvents] = useState([]);
 
   // Fetch notices from Firebase
   useEffect(() => {
@@ -149,23 +74,22 @@ export function NoticeEventsSection() {
         console.log("📝 Notices array:", result.notices);
         setNotices(result.notices);
       } else {
-        // Use fallback notices if Firebase fails or returns empty
-        console.warn(
-          "⚠️ No notices found or Firebase failed, using fallback notices"
-        );
+        // Show empty state if no notices found
+        console.warn("⚠️ No notices found or Firebase failed");
         console.error("Firebase error:", result.error);
-        setNotices(fallbackNotices);
+        setNotices([]);
       }
     } catch (error) {
       console.error("❌ Error fetching notices:", error);
-      console.log("🔄 Using fallback notices due to error");
-      setNotices(fallbackNotices); // Use fallback instead of empty array
+      console.log("🔄 Showing empty state due to error");
+      setNotices([]); // Show empty state instead of fallback
     } finally {
       setLoading(false);
       console.log("🏁 Finished fetching notices. Loading:", false);
     }
   };
 
+  // Helper function for date formatting
   const formatDate = (dateString) => {
     try {
       if (!dateString || dateString === null) {
@@ -189,7 +113,7 @@ export function NoticeEventsSection() {
     }
   };
 
-  // Helper functions for enhanced display
+  // Helper function for category icons
   const getCategoryIcon = (category) => {
     const iconMap = {
       [NOTICE_CATEGORY.EXAM]: FileText,
@@ -267,129 +191,6 @@ export function NoticeEventsSection() {
       ...new Set(notices.map((notice) => notice.category).filter(Boolean)),
     ];
     return categories;
-  };
-
-  // Notice Details Modal Component
-  const NoticeDetailsModal = ({ notice, isOpen, onClose }) => {
-    if (!notice) return null;
-
-    const CategoryIcon = getCategoryIcon(notice.category);
-    const expiryInfo = formatExpiryDate(notice.expiryDate);
-
-    return (
-      <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <div className="flex items-start justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  {notice.category && (
-                    <Badge
-                      className={`${
-                        CATEGORY_COLORS[notice.category]
-                      } flex items-center gap-1`}
-                    >
-                      <CategoryIcon className="w-3 h-3" />
-                      {CATEGORY_NAMES[notice.category] || notice.category}
-                    </Badge>
-                  )}
-                  {notice.audience &&
-                    notice.audience !== NOTICE_AUDIENCE.ALL && (
-                      <Badge
-                        className={`${
-                          AUDIENCE_COLORS[notice.audience]
-                        } flex items-center gap-1`}
-                      >
-                        <Users className="w-3 h-3" />
-                        {AUDIENCE_NAMES[notice.audience]}
-                      </Badge>
-                    )}
-                </div>
-                <DialogTitle className="text-xl lg:text-2xl">
-                  {notice.title}
-                </DialogTitle>
-                <DialogDescription className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  Published:{" "}
-                  {formatDate(
-                    notice.publishDate || notice.date || notice.createdAt
-                  )}
-                  {expiryInfo && (
-                    <span
-                      className={`ml-4 px-2 py-1 rounded text-xs ${
-                        expiryInfo.type === "expired"
-                          ? "bg-red-100 text-red-800"
-                          : expiryInfo.type === "warning"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : "bg-green-100 text-green-800"
-                      }`}
-                    >
-                      {expiryInfo.text}
-                    </span>
-                  )}
-                </DialogDescription>
-              </div>
-            </div>
-          </DialogHeader>
-
-          <div className="space-y-4">
-            <div className="prose prose-sm max-w-none">
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                {notice.content ||
-                  notice.description ||
-                  "No detailed content available."}
-              </p>
-            </div>
-
-            {/* Tags */}
-            {notice.tags && notice.tags.length > 0 && (
-              <div className="space-y-2">
-                <h4 className="font-medium text-sm">Tags:</h4>
-                <div className="flex flex-wrap gap-2">
-                  {notice.tags.map((tag, index) => (
-                    <Badge key={index} variant="outline" className="text-xs">
-                      #{tag}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Attachments */}
-            <div className="space-y-2">
-              <h4 className="font-medium text-sm">Downloads:</h4>
-              <div className="flex flex-wrap gap-2">
-                {notice.pdfSrc && (
-                  <Link
-                    href={notice.pdfSrc}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-2 text-sm"
-                  >
-                    <Download className="w-4 h-4" />
-                    Download PDF
-                  </Link>
-                )}
-                {notice.attachments &&
-                  notice.attachments.length > 0 &&
-                  notice.attachments.map((attachment, index) => (
-                    <Link
-                      key={index}
-                      href={attachment.url || attachment.downloadURL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-2 text-sm"
-                    >
-                      <Download className="w-4 h-4" />
-                      Download PDF
-                    </Link>
-                  ))}
-              </div>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-    );
   };
 
   return (
