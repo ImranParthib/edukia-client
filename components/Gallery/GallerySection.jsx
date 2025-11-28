@@ -38,20 +38,18 @@ export function GallerySection() {
       title: "Graffiti for July 24",
       url: "/gallery/graffiti.png",
     },
-
     {
-      id: 5,
+      id: 6,
       title: "Annual Function",
       url: "/gallery/annual-function.png",
     },
     {
-      id: 6,
+      id: 7,
       title: "Teacher's Day Celebration",
       url: "/gallery/teachers-day.png",
     },
-
     {
-      id: 7,
+      id: 8,
       title: "Cultural Event",
       url: "/gallery/cultural-event.png",
     },
@@ -89,9 +87,9 @@ export function GallerySection() {
             isLoading ? "opacity-0 absolute" : "opacity-100"
           }`}
         >
-          {galleryImages.map((image) => (
+          {galleryImages.map((image, index) => (
             <div
-              key={image.id}
+              key={`gallery-${image.id}-${index}`}
               className="relative aspect-square overflow-hidden rounded-lg group border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900"
             >
               <Image

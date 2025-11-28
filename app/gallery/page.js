@@ -1,4 +1,4 @@
-import { GallerySection } from "@/components/GallerySection";
+import { GallerySection } from "@/components/Gallery/GallerySection";
 import React from "react";
 
 const GalleryPage = () => {

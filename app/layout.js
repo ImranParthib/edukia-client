@@ -3,6 +3,7 @@ import "./globals.css";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import { ThemeProvider } from "@/components/theme-provider";
+import { NoticesProvider } from "@/contexts/NoticesContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,9 +33,11 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          {children}
-          <Footer />
+          <NoticesProvider>
+            <Header />
+            {children}
+            <Footer />
+          </NoticesProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -1,4 +1,4 @@
-import { NoticeEventsSection } from "@/components/NoticeEventsSection";
+import { NoticeEventsSection } from "@/components/NoticeEvents/NoticeEventsSection";
 import React from "react";
 
 const NoticePage = () => {
