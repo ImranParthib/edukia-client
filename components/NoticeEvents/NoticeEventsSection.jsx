@@ -102,8 +102,11 @@ export function NoticeEventsSection() {
 
             {loading ? (
               <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <NoticeCardSkeleton key={`skeleton-${i}`} isFirstLoad={isFirstLoad} />
+                {[1, 2, 3].map((i) => (
+                  <NoticeCardSkeleton
+                    key={`skeleton-${i}`}
+                    isFirstLoad={isFirstLoad}
+                  />
                 ))}
               </div>
             ) : !hasFilteredNotices() ? (
@@ -135,7 +138,7 @@ export function NoticeEventsSection() {
               </div>
             )}
 
-            {pathname !== "/notice" && (
+            {pathname !== "/notice" && getTotalNoticesCount() > 3 && (
               <div className="text-center mt-8">
                 <Link href="/notice">
                   <Button
@@ -168,7 +171,7 @@ export function NoticeEventsSection() {
               </div>
             )}
 
-            {pathname !== "/notice" && (
+            {pathname !== "/notice" && events.length > 3 && (
               <div className="text-center mt-8">
                 <Link href="/notice">
                   <Button
