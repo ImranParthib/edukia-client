@@ -1,8 +1,8 @@
-import { HeroSection } from "@/components/HeroSection";
-import { AboutSection } from "@/components/AboutSection";
-import { AcademicFeaturesSection } from "@/components/AcademicFeaturesSection";
+import { HeroSection } from "@/components/HeroSection/HeroSection";
+import { AboutSection } from "@/components/AboutSection/AboutSection";
+import { AcademicFeaturesSection } from "@/components/AcademicExcellence/AcademicFeaturesSection";
 import { NoticeEventsSection } from "@/components/NoticeEvents/NoticeEventsSection";
-import { GallerySection } from "@/components/GallerySection";
+import { GallerySection } from "@/components/Gallery/GallerySection";
 
 export default function Home() {
   return (
