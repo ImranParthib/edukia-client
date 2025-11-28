@@ -28,78 +28,15 @@ import {
   CATEGORY_NAMES,
   AUDIENCE_NAMES,
 } from "@/lib/constants/notices";
-
-// Helper functions
-const formatDate = (dateString) => {
-  try {
-    if (!dateString || dateString === null) {
-      return "Date not available";
-    }
-
-    const date = new Date(dateString);
-
-    // Check if the date is valid
-    if (isNaN(date.getTime())) {
-      return "Date not available";
-    }
-
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  } catch (error) {
-    return "Date not available";
-  }
-};
-
-const getCategoryIcon = (category) => {
-  const iconMap = {
-    [NOTICE_CATEGORY.EXAM]: FileText,
-    [NOTICE_CATEGORY.ADMISSION]: GraduationCap,
-    [NOTICE_CATEGORY.GENERAL]: Info,
-    [NOTICE_CATEGORY.HOLIDAY]: Calendar,
-    [NOTICE_CATEGORY.ANNOUNCEMENT]: Megaphone,
-    [NOTICE_CATEGORY.RESULTS]: Trophy,
-  };
-  return iconMap[category] || Info;
-};
-
-const formatExpiryDate = (expiryDate) => {
-  if (!expiryDate) return null;
-  try {
-    const date = new Date(expiryDate);
-    const now = new Date();
-    const diffTime = date - now;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays < 0) {
-      return { text: "Expired", type: "expired" };
-    } else if (diffDays === 0) {
-      return { text: "Expires today", type: "warning" };
-    } else if (diffDays === 1) {
-      return { text: "Expires tomorrow", type: "warning" };
-    } else if (diffDays <= 7) {
-      return { text: `Expires in ${diffDays} days`, type: "warning" };
-    } else {
-      return {
-        text: `Valid until ${date.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-        })}`,
-        type: "info",
-      };
-    }
-  } catch (error) {
-    return null;
-  }
-};
+import {
+  formatDate,
+  getCategoryIcon,
+} from "@/lib/utils/noticeHelpers";
 
 export function NoticeDetailsModal({ notice, isOpen, onClose }) {
   if (!notice) return null;
 
   const CategoryIcon = getCategoryIcon(notice.category);
-  const expiryInfo = formatExpiryDate(notice.expiryDate);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -172,7 +109,7 @@ export function NoticeDetailsModal({ notice, isOpen, onClose }) {
               <h4 className="font-medium text-sm">Tags:</h4>
               <div className="flex flex-wrap gap-2">
                 {notice.tags.map((tag, index) => (
-                  <Badge key={index} variant="outline" className="text-xs">
+                  <Badge key={`${notice.id}-modal-tag-${index}`} variant="outline" className="text-xs">
                     #{tag}
                   </Badge>
                 ))}
@@ -199,7 +136,7 @@ export function NoticeDetailsModal({ notice, isOpen, onClose }) {
                 notice.attachments.length > 0 &&
                 notice.attachments.map((attachment, index) => (
                   <Link
-                    key={index}
+                    key={`${notice.id}-modal-attachment-${index}`}
                     href={attachment.url || attachment.downloadURL}
                     target="_blank"
                     rel="noopener noreferrer"

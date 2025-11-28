@@ -1,33 +1,19 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-
 import {
   Calendar,
   Bell,
   Info,
-  FileText,
-  GraduationCap,
-  Megaphone,
-  Trophy,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { usePathname } from "next/navigation";
-import { NoticeService } from "@/lib/services/NoticeService";
 import { NoticeCardSkeleton } from "@/components/ui/loading";
 import { useFirstLoad } from "@/hooks/use-loading";
-import {
-  NOTICE_CATEGORY,
-  NOTICE_AUDIENCE,
-  CATEGORY_COLORS,
-  AUDIENCE_COLORS,
-  CATEGORY_NAMES,
-  AUDIENCE_NAMES,
-} from "@/lib/constants/notices";
+import { useNotices } from "@/hooks/use-notices";
+import { CATEGORY_NAMES } from "@/lib/constants/notices";
 import { NoticeDetailsModal } from "./NoticeDetailsModal";
 import { NoticeCard } from "./NoticeCard";
 import { EventCard } from "./EventCard";
@@ -35,116 +21,24 @@ import { EventCard } from "./EventCard";
 export function NoticeEventsSection() {
   const pathname = usePathname();
   const { isFirstLoad } = useFirstLoad("notices-section");
-  const [notices, setNotices] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedNotice, setSelectedNotice] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Events will be fetched from database or service
-  const [events, setEvents] = useState([]);
-
-  // Fetch notices from Firebase
-  useEffect(() => {
-    fetchNotices();
-  }, []);
-
-  const fetchNotices = async () => {
-    setLoading(true);
-    try {
-      console.log("🔄 Starting to fetch notices...");
-      const result = await NoticeService.getHomepageNotices();
-
-      console.log("📊 Fetch result:", result);
-
-      if (result.success && result.notices.length > 0) {
-        console.log("✅ Success! Found notices:", result.notices.length);
-        console.log("📝 Notices array:", result.notices);
-        setNotices(result.notices);
-      } else {
-        // Show empty state if no notices found
-        console.warn("⚠️ No notices found or Firebase failed");
-        console.error("Firebase error:", result.error);
-        setNotices([]);
-      }
-    } catch (error) {
-      console.error("❌ Error fetching notices:", error);
-      console.log("🔄 Showing empty state due to error");
-      setNotices([]); // Show empty state instead of fallback
-    } finally {
-      setLoading(false);
-      console.log("🏁 Finished fetching notices. Loading:", false);
-    }
-  };
-
-  // Helper function for date formatting
-  const formatDate = (dateString) => {
-    try {
-      if (!dateString || dateString === null) {
-        return "Date not available";
-      }
-
-      const date = new Date(dateString);
-
-      // Check if the date is valid
-      if (isNaN(date.getTime())) {
-        return "Date not available";
-      }
-
-      return date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
-    } catch (error) {
-      return "Date not available";
-    }
-  };
-
-  // Helper function for category icons
-  const getCategoryIcon = (category) => {
-    const iconMap = {
-      [NOTICE_CATEGORY.EXAM]: FileText,
-      [NOTICE_CATEGORY.ADMISSION]: GraduationCap,
-      [NOTICE_CATEGORY.GENERAL]: Info,
-      [NOTICE_CATEGORY.HOLIDAY]: Calendar,
-      [NOTICE_CATEGORY.ANNOUNCEMENT]: Megaphone,
-      [NOTICE_CATEGORY.RESULTS]: Trophy,
-    };
-    return iconMap[category] || Info;
-  };
-
-  const sortNotices = (notices) => {
-    return [...notices].sort((a, b) => {
-      // Then sort by date (newest first) - prioritize publishDate
-      const dateA = new Date(a.publishDate || a.createdAt || a.date || 0);
-      const dateB = new Date(b.publishDate || b.createdAt || b.date || 0);
-
-      // Handle invalid dates
-      const validDateA = !isNaN(dateA.getTime()) ? dateA : new Date(0);
-      const validDateB = !isNaN(dateB.getTime()) ? dateB : new Date(0);
-
-      return validDateB - validDateA;
-    });
-  };
-
-  const filterNoticesByCategory = (notices, category) => {
-    if (category === "all") return notices;
-    return notices.filter((notice) => notice.category === category);
-  };
-
-  const getFilteredAndSortedNotices = () => {
-    const filtered = filterNoticesByCategory(notices, selectedCategory);
-    return sortNotices(filtered);
-  };
-
-  // Get unique categories from notices for tabs
-  const getAvailableCategories = () => {
-    const categories = [
-      ...new Set(notices.map((notice) => notice.category).filter(Boolean)),
-    ];
-    return categories;
-  };
+  
+  // Use notices context
+  const {
+    notices,
+    events,
+    loading,
+    selectedCategory,
+    selectedNotice,
+    isModalOpen,
+    filteredNotices,
+    availableCategories,
+    setCategoryFilter,
+    setSelectedNotice,
+    closeModal,
+    getTotalNoticesCount,
+    hasFilteredNotices,
+    getCategoryData,
+  } = useNotices();
 
   return (
     <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24 xl:py-32 bg-gray-50 dark:bg-gray-900">
@@ -178,18 +72,16 @@ export function NoticeEventsSection() {
               <Button
                 variant={selectedCategory === "all" ? "default" : "outline"}
                 size="sm"
-                onClick={() => setSelectedCategory("all")}
+                onClick={() => setCategoryFilter("all")}
                 className="flex items-center gap-2"
               >
                 <Info className="w-4 h-4" />
-                All ({notices.length})
+                All ({getTotalNoticesCount()})
               </Button>
 
-              {getAvailableCategories().map((category) => {
-                const CategoryIcon = getCategoryIcon(category);
-                const count = notices.filter(
-                  (n) => n.category === category
-                ).length;
+              {availableCategories.map((category) => {
+                const categoryData = getCategoryData(category);
+                const CategoryIcon = categoryData.icon;
 
                 return (
                   <Button
@@ -198,11 +90,11 @@ export function NoticeEventsSection() {
                       selectedCategory === category ? "default" : "outline"
                     }
                     size="sm"
-                    onClick={() => setSelectedCategory(category)}
+                    onClick={() => setCategoryFilter(category)}
                     className="flex items-center gap-2"
                   >
                     <CategoryIcon className="w-4 h-4" />
-                    {CATEGORY_NAMES[category] || category} ({count})
+                    {categoryData.displayName} ({categoryData.count})
                   </Button>
                 );
               })}
@@ -211,10 +103,10 @@ export function NoticeEventsSection() {
             {loading ? (
               <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <NoticeCardSkeleton key={i} isFirstLoad={isFirstLoad} />
+                  <NoticeCardSkeleton key={`skeleton-${i}`} isFirstLoad={isFirstLoad} />
                 ))}
               </div>
-            ) : getFilteredAndSortedNotices().length === 0 ? (
+            ) : !hasFilteredNotices() ? (
               <div className="text-center py-8">
                 <Bell className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                 <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">
@@ -233,14 +125,11 @@ export function NoticeEventsSection() {
               </div>
             ) : (
               <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {getFilteredAndSortedNotices().map((notice) => (
+                {filteredNotices.map((notice, index) => (
                   <NoticeCard
-                    key={notice.id}
+                    key={notice.id || `notice-${index}`}
                     notice={notice}
-                    onViewDetails={(notice) => {
-                      setSelectedNotice(notice);
-                      setIsModalOpen(true);
-                    }}
+                    onViewDetails={setSelectedNotice}
                   />
                 ))}
               </div>
@@ -273,8 +162,8 @@ export function NoticeEventsSection() {
               </div>
             ) : (
               <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {events.map((event) => (
-                  <EventCard key={event.id} event={event} />
+                {events.map((event, index) => (
+                  <EventCard key={event.id || `event-${index}`} event={event} />
                 ))}
               </div>
             )}
@@ -298,10 +187,7 @@ export function NoticeEventsSection() {
         <NoticeDetailsModal
           notice={selectedNotice}
           isOpen={isModalOpen}
-          onClose={() => {
-            setIsModalOpen(false);
-            setSelectedNotice(null);
-          }}
+          onClose={closeModal}
         />
       </div>
     </section>

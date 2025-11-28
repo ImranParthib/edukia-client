@@ -39,7 +39,7 @@ const formatDate = (dateString) => {
 
 export function EventCard({ event }) {
   return (
-    <Card key={event.id} className="overflow-hidden">
+    <Card className="overflow-hidden">
       <div
         className={`h-32 sm:h-40 ${event.image} rounded-t-lg flex items-center justify-center`}
       >

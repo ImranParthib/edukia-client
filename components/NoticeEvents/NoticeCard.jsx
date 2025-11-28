@@ -31,73 +31,12 @@ import {
   CATEGORY_NAMES,
   AUDIENCE_NAMES,
 } from "@/lib/constants/notices";
-
-// Helper functions
-const formatDate = (dateString) => {
-  try {
-    if (!dateString || dateString === null) {
-      return "Date not available";
-    }
-
-    const date = new Date(dateString);
-
-    // Check if the date is valid
-    if (isNaN(date.getTime())) {
-      return "Date not available";
-    }
-
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  } catch (error) {
-    return "Date not available";
-  }
-};
-
-const getCategoryIcon = (category) => {
-  const iconMap = {
-    [NOTICE_CATEGORY.EXAM]: FileText,
-    [NOTICE_CATEGORY.ADMISSION]: GraduationCap,
-    [NOTICE_CATEGORY.GENERAL]: Info,
-    [NOTICE_CATEGORY.HOLIDAY]: Calendar,
-    [NOTICE_CATEGORY.ANNOUNCEMENT]: Megaphone,
-    [NOTICE_CATEGORY.RESULTS]: Trophy,
-  };
-  return iconMap[category] || Info;
-};
-
-const formatExpiryDate = (expiryDate) => {
-  if (!expiryDate) return null;
-  try {
-    const date = new Date(expiryDate);
-    const now = new Date();
-    const diffTime = date - now;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays < 0) {
-      return { text: "Expired", type: "expired" };
-    } else if (diffDays === 0) {
-      return { text: "Expires today", type: "warning" };
-    } else if (diffDays === 1) {
-      return { text: "Expires tomorrow", type: "warning" };
-    } else if (diffDays <= 7) {
-      return { text: `Expires in ${diffDays} days`, type: "warning" };
-    } else {
-      return {
-        text: `Valid until ${date.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-        })}`,
-        type: "info",
-      };
-    }
-  } catch (error) {
-    return null;
-  }
-};
-
+import {
+  formatDate,
+  getCategoryIcon,
+  formatExpiryDate,
+} from "@/lib/utils/noticeHelpers";
+// Helper function for expiry checking
 const isExpired = (expiryDate) => {
   if (!expiryDate) return false;
   return new Date(expiryDate) < new Date();
@@ -106,10 +45,9 @@ const isExpired = (expiryDate) => {
 export function NoticeCard({ notice, onViewDetails }) {
   const CategoryIcon = getCategoryIcon(notice.category);
   const expired = isExpired(notice.expiryDate);
-  const expiryInfo = formatExpiryDate(notice.expiryDate);
 
   return (
-    <Card key={notice.id} className={`relative ${expired ? "opacity-75" : ""}`}>
+    <Card className={`relative ${expired ? "opacity-75" : ""}`}>
       <CardHeader className="pb-3">
         {/* Category and Validity Badges - Responsive Layout */}
         <div className="flex flex-col sm:flex-col sm:items-end sm:justify-between gap-2 mb-2">
@@ -170,7 +108,7 @@ export function NoticeCard({ notice, onViewDetails }) {
         {notice.tags && notice.tags.length > 0 && (
           <div className="flex flex-wrap gap-1 mt-3">
             {notice.tags.slice(0, 3).map((tag, index) => (
-              <Badge key={index} variant="outline" className="text-xs">
+              <Badge key={`${notice.id}-tag-${index}`} variant="outline" className="text-xs">
                 #{tag}
               </Badge>
             ))}
@@ -203,7 +141,7 @@ export function NoticeCard({ notice, onViewDetails }) {
           notice.attachments.length > 0 &&
           notice.attachments.map((attachment, index) => (
             <Link
-              key={index}
+              key={`${notice.id}-attachment-${index}`}
               href={attachment.url || attachment.downloadURL}
               target="_blank"
               rel="noopener noreferrer"
